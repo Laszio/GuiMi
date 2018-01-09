@@ -1,0 +1,96 @@
+<extend name="Common/index" />
+<block name="nav" ></block>
+<block name="main" >
+        <div class="cart-header wrapper">
+            <div class="logo">
+                <a href="index.html"><img src="__PUBLIC__/Home/img/logo.png" alt="logo" /></a>
+            </div>
+            <div class="step-box">
+                <div class="row">
+                    <div class="step first active col-3">
+                        <span class="num">1</span><span class="line"></span><span class="label">我的购物车</span>
+                    </div>
+                    <div class="step active col-3">
+                        <span class="num">2</span><span class="line"></span><span class="label">确认订单信息</span>
+                    </div>
+                    <div class="step active col-3">
+                        <span class="num">3</span><span class="line"></span><span class="label">选择支付方式</span>
+                    </div>
+                    <div class="step last col-3">
+                        <span class="num">4</span><span class="line"></span><span class="label">完成付款</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--头部-->
+
+    <div class="wrapper">
+        <div class="pay-wrap">
+            <div class="order-result">
+                <div class="section clearfix">
+                    <img src="__PUBLIC__/Home/img/ico/order-success.jpg" class="ico" />
+                    <div class="titbox">
+                        <div class="tit">订单提交成功，应付金额 {$totalMoney} 元</div>
+                        <div class="stit">订单号：{$order['id']}    请您在 1 日 内完成支付，否则订单会被自动取消</div>
+                    </div>
+                    <div class="mt20">
+                        <foreach name="detailInfo" item="v">
+                            <div class="meta">
+                                <div class="hd">商品</div>
+                                <div class="bd"><?= $v['gname'].'　'.$v['color'].'-'.$v['size'].' * '.$v['num']?></div>
+                            </div>
+                        </foreach>
+                        <div class="meta">
+                            <div class="hd">收货地址</div>
+                            <div class="bd"><?= $order['address'].'('.$order['getman'].'收)　'.$order['phone']?></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pay-wrap-tit">
+            在线支付
+        </div>
+        <div class="pay-wrap">
+            <div class="pay-way">
+                <div class="row">
+                    <div class="col col-3">
+                        <label><input class="check" type="radio" name="a" /><img src="__PUBLIC__/Home/img/pay/zfb.jpg" /></label>
+                    </div>
+                    <div class="col col-3">
+                        <label><input class="check" type="radio" name="a" /><img src="__PUBLIC__/Home/img/pay/weixin.jpg" /></label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-3">
+                        <label><input class="check" type="radio" name="a" /><img class="bd" src="__PUBLIC__/Home/img/pay/zgyh.jpg" /></label>
+                    </div>
+                    <div class="col col-3">
+                        <label><input class="check" type="radio" name="a" /><img class="bd" src="__PUBLIC__/Home/img/pay/jsyh.jpg" /></label>
+                    </div>
+                    <div class="col col-3">
+                        <label><input class="check" type="radio" name="a" /><img class="bd" src="__PUBLIC__/Home/img/pay/nyyh.jpg" /></label>
+                    </div>
+                    <div class="col col-3">
+                        <label><input class="check" type="radio" name="a" /><img class="bd" src="__PUBLIC__/Home/img/pay/gsyh.jpg" /></label>
+                    </div>
+                    <div class="col col-3">
+                        <label><input class="check" type="radio" name="a" /><img class="bd" src="__PUBLIC__/Home/img/pay/jtyh.jpg" /></label>
+                    </div>
+                    <div class="col col-3">
+                        <label><input class="check" type="radio" name="a" /><img class="bd" src="__PUBLIC__/Home/img/pay/zsyh.jpg" /></label>
+                    </div>
+                    <div class="col col-3">
+                        <label><input class="check" type="radio" name="a" /><img class="bd" src="__PUBLIC__/Home/img/pay/yzcxyh.jpg" /></label>
+                    </div>
+                    <div class="col col-3">
+                        <label><input class="check" type="radio" name="a" /><img class="bd" src="__PUBLIC__/Home/img/pay/xyyy.jpg" /></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-panel">
+            <a href="__MODULE__/Order/okPay/oid/{$order[id]}" class="go-next ui-btn-theme">下一步</a>
+        </div>
+    </div>
+</block>

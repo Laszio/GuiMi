@@ -1,0 +1,109 @@
+<extend name="Common/index" />
+<block name="main">
+    <div class="wrapper uc-router">
+        <ul>
+            <li><a href="">首页</a></li>
+            <li><span class="divider"></span></li>
+            <li><span>个人中心</span></li>
+        </ul>
+    </div>
+
+    <div class="wrapper">
+        <div class="uc-main clearfix">
+            <div class="uc-aside">
+                <div class="uc-menu">
+                    <div class="tit">订单中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/allOrder')}">我的订单</a></li>
+                        <li><a href="{:U('User/favorite')}">我的收藏</a></li>
+                        <li><a href="{:U('History/index')}">浏览历史</a></li>
+                        <li><a href="{:U('Score/index')}">个人积分</a></li>
+                    </ul>
+                    <div class="tit">客户服务</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/comeBackInfo')}">退货中心</a></li>
+                    </ul>
+                    <div class="tit">账户中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('User/userInfo')}">账户信息</a></li>
+                        <li><a href="{:U('User/safe')}">账户安全</a></li>
+                        <li><a href="{:U('Address/index')}">收货地址</a></li>
+                    </ul>
+                    <div class="tit">消息中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/waitEvaluate')}">商品评价</a></li>
+                        <li><a href="{:U('Message/index')}">站内消息</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uc-content">
+                <div class="uc-panel">
+                    <div class="uc-bigtit">我的足迹</div>
+                    <div class="uc-panel-bd">
+                        <div class="uc-bar mt10">
+                            <div class="fl">以下是您最近30天最近8条的商品浏览记录</div>
+                            
+                        </div>
+
+                        <div class="footprint-box">
+                            <div class="footprint-item">
+                                <div class="f-info">
+                                    <span class="f-date">足迹</span><span class="f-time"></span>
+                                </div>
+                                <div class="f-goods-list clearfix">
+
+                                    <!-- 定位足迹 -->
+                                    <empty name="history">
+                                        <div style="height:100px;">
+                                            <span style="font-size:16px;line-height:100px;color:red;">暂无浏览商品，快去逛逛吧~</span>   
+                                        </div>
+                                    <else />
+                                        <foreach name="history" item="v" key="k">
+                                            <div class="item">
+                                                <a k="{$k}" class="g-del jin-del"><i class="iconfont icon-shanchu"></i></a>
+                                                <a href="{:U('Goods/index', ['id'=>$v['id']])}"><img class="figure" src="__ROOT__/Uploads/{$v['pic1']}" alt="" /></a>
+                                                <div class="cont">
+                                                    <div class="name"><a href="">{$v['gname']}</a></div>
+                                                    <div class="price">
+                                                        <span class="n">￥{$v['price']*($v['discount']/100)}</span><span class="s">{$v['price']}</span>
+                                                    </div>
+                                                    <span style="color: gray;position: relative;left:119px;top:12px;">{$v['save_time']}</span>
+                                                </div>
+                                            </div>
+                                        </foreach>
+                                    </empty>
+                                </div>
+                            </div>
+                            
+                            <div class="footprint-item end">
+                                <div class="nomore">最多显示最近8条哦~</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="javas">
+    <script>
+        $('.jin-del').click(function() {
+            var self = $(this);
+            var k = $(this).attr('k');
+
+            $.ajax({
+                url: '__URL__/ajaxDelHistory',
+                type: 'get',
+                data: {k: k},
+                async: true,
+                success: function(res) {
+                    if (res == 1) {
+                        self.parent().remove();
+                    }
+                }
+            });                  
+        });
+    </script>
+</block>

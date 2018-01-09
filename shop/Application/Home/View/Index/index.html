@@ -1,0 +1,350 @@
+<extend name="Common/index" />
+<block name="main">
+    <div class="home-full-banner">
+    <!-- 轮播图 -->
+    <foreach name='turnpic' item='v' key='k'>
+        <a href="{$v['url']}" class="item"><img src='' data-echo="{$v['img']}" alt="" /></a>
+    </foreach>
+    </div>
+
+    <div class="gray-box">
+        <div class="wrapper">
+            <!-- 商品促销  lzz -->
+
+            <div class="promo-list clearfix">
+                <foreach name="hotGoodsInfo" item="v">
+                    <div class="col">
+                        <a class="item" href="{:U('Goods/index', ['id'=>$v['id']])}"><img style="width: 185px" src="__ROOT__/Uploads{$v['pic1']}" data-echo="__ROOT__/Uploads{$v['pic1']}" alt="" /></a>
+                    </div>
+                </foreach>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="white-box">
+        <div class="wrapper">
+            <!-- 品牌盛宴 -->
+            <div class="brand-feast-section">
+                <div class="section-hd">
+                    <div class="title">品牌盛宴</div>
+                </div>
+                <div class="brand-feast clearfix">
+                    <div class="ad-box">
+                        <a href=""><img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="/Uploads/index/pinpaijie.jpg" /></a>
+                    </div>
+                    <div class="brand-feast-list">
+                    <foreach name='shopBrand' item='v' key='k'>
+                        <div class="item">
+                            <div class="logo"><img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$v['logo']}" alt="" /></div>
+                            <a class="mask" href="{$v['url']}"><span class="text">{$v['brand']}<br />{$v['des']}</span></a>
+                        </div>
+                    </foreach>
+                    </div>
+                </div>
+                
+                <div style="margin-top:12px;" id='advertise'>
+                    <a href="{$advertise['toUrl']}"><img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$advertise['img']}" alt="" style='width:1200px' /></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="gray-box">
+        <div class="wrapper floor-wrap">
+            <!-- floor1到floor5控制楼层的主题 -->
+            <div class="floor-section floor1">
+                <div class="section-hd">
+                    <div class="title">男装</div>
+                    <div class="bar more">
+                        <a href="{:U('List/index',['tid'=>82])}">男上衣</a><a href="{:U('List/index',['tid'=>83])}">男裤</a><a href="{:U('List/index',['tid'=>84])}">外套</a>
+                    </div>
+                </div>
+                <div class="section-bd clearfix">
+                    <div class="section-side">
+                        <div class="banner">
+                            <a href="{:U('list/index',[tid=>77])}"><img style='width:304px;height:397px;margin-left:-20px;' src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="/Uploads/index/manyi.jpg" alt="" /></a>
+                        </div>
+                        <div class="brands">
+                    <foreach name='man_brand' item='v' key='k'>
+                       
+                            <a href="{$v['url']}" class="item"><div class="inner"><img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$v['pic1']}" alt="" /></div></a>
+                        
+                    </foreach>
+                        </div>
+                    </div>
+                    <div class="section-cont">
+                        <div class="col">
+                            <a class="grid grid-s" href="{$man[0]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$man[0]['gname']}</div>
+                                    <div class="info">{$man[0]['price']} </div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$man[0]['pic1']}" alt="" />
+                            </a>
+                            <a class="grid grid-s" href="{$man[1]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$man[1]['gname']}</div>
+                                    <div class="info">{$man[1]['price']} </div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$man[1]['pic1']}" alt="" />
+                            </a>
+                            <a class="grid grid-s" href="{$man[2]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$man[2]['gname']}</div>
+                                    <div class="info">{$man[2]['price']}</div>
+                                </div>
+                                <img src="__PUBLIC__/Home/uploads/placeholder.gif" data-echo="{$man[3]['pic1']}" alt="" />
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a class="grid grid-b" href="{$man[3]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$man[3]['gname']}</div>
+                                    <div class="info">{$man[3]['price']}</div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$man[3]['pic1']}" alt="" />
+                            </a>
+                            <a class="grid grid-m" href="{$man[4]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$man[4]['gname']}</div>
+                                    <div class="info">{$man[4]['price']} </div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$man[4]['pic1']}" alt="" />
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a class="grid grid-s" href="{$man[5]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$man[5]['gname']}</div>
+                                    <div class="info">{$man[5]['price']}</div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$man[5]['pic1']}" alt="" />
+                            </a>
+                            <a class="grid grid-s" href="{$man[6]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$man[6]['gname']}</div>
+                                    <div class="info">{$man[6]['price']} </div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$man[6]['pic1']}" alt="" />
+                            </a>
+                            <a class="grid grid-s" href="{$man[7]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$man[7]['gname']}</div>
+                                    <div class="info">{$man[7]['price']} </div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$man[7]['pic1']}" alt="" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="floor-section floor1">
+                <div class="section-hd">
+                    <div class="title">女装</div>
+                    <div class="bar more">
+                        <a href="{:U('List/index',['tid'=>28])}">裙子</a><a href="{:U('List/index',['tid'=>63])}">女上衣</a><a href="{:U('List/index',['tid'=>51])}">女裤</a>
+                    </div>
+                </div>
+                <div class="section-bd clearfix">
+                    <div class="section-side">
+                        <div class="banner">
+                            <a href="{:U('list/index',[tid=>16])}"><img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="/Uploads/index/nvzhuang.jpg" alt="" style='width:304px;height:397px;'/></a>
+                        </div>
+                        <div class="brands">
+                    <foreach name='woman_brand' item='v' key='k'>
+                       
+                            <a href="{$v['url']}" class="item"><div class="inner"><img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$v['pic1']}" alt="" /></div></a>
+                        
+                    </foreach>
+                        </div>
+                    </div>
+                    <div class="section-cont">
+                        <div class="col">
+                            <a class="grid grid-s" href="{$woman[0]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$woman[0]['gname']}</div>
+                                    <div class="info">{$woman[0]['price']} </div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$woman[0]['pic1']}" alt="" />
+                            </a>
+                            <a class="grid grid-s" href="{$woman[1]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$woman[1]['gname']}</div>
+                                    <div class="info">{$woman[1]['price']} </div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$woman[1]['pic1']}" alt="" />
+                            </a>
+                            <a class="grid grid-s" href="{$woman[2]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$woman[2]['gname']}</div>
+                                    <div class="info">{$woman[2]['price']}</div>
+                                </div>
+                                <img src="__PUBLIC__/Home/uploads/placeholder.gif" data-echo="{$woman[2]['pic1']}" alt="" />
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a class="grid grid-b" href="{$woman[3]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$woman[3]['gname']}</div>
+                                    <div class="info">{$woman[3]['price']}</div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$woman[3]['pic1']}" alt="" />
+                            </a>
+                            <a class="grid grid-m" href="{$woman[4]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$woman[4]['gname']}</div>
+                                    <div class="info">{$woman[4]['price']} </div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$woman[4]['pic1']}" alt="" />
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a class="grid grid-s" href="{$woman[5]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$woman[5]['gname']}</div>
+                                    <div class="info">{$woman[5]['price']}</div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$woman[5]['pic1']}" alt="" />
+                            </a>
+                            <a class="grid grid-s" href="{$woman[6]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$woman[6]['gname']}</div>
+                                    <div class="info">{$woman[6]['price']} </div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$woman[6]['pic1']}" alt="" />
+                            </a>
+                            <a class="grid grid-s" href="{$woman[7]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$woman[7]['gname']}</div>
+                                    <div class="info">{$woman[7]['price']} </div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$woman[7]['pic1']}" alt="" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="floor-section floor1">
+                <div class="section-hd">
+                    <div class="title">男鞋</div>
+                    <div class="bar more">
+                        <a href="{:U('list/index',[tid=>101])}">板鞋</a><a href="{:U('list/index',[tid=>104])}">运动鞋</a><a href="{:U('list/index',[tid=>103])}">皮鞋</a><a href="{:U('list/index',[tid=>102])}">帆布鞋</a>
+                    </div>
+                </div>
+                <div class="section-bd clearfix">
+                    
+                    <div class="section-side">
+                        <div class="banner">
+                            <a href="{:U('list/index',[tid=>78])}"><img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="/Uploads/index/manshose.jpg" alt="" style='width:304px;height:397px;'/></a>
+                        </div>
+                        <div class="brands">
+                    <foreach name='manshoe_brand' item='v' key='k'>
+                       
+                            <a href="{$v['url']}" class="item"><div class="inner"><img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$v['pic1']}" alt="" /></div></a>
+                        
+                    </foreach>
+                        </div>
+                    </div>
+                     <div class="section-cont">
+                        <div class="col">
+                            <a class="grid grid-s" href="{$manshoe[0]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$manshoe[0]['gname']}</div>
+                                    <div class="info">{$manshoe[0]['price']} </div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$manshoe[0]['pic1']}" alt="" />
+                            </a>
+                            <a class="grid grid-s" href="{$manshoe[1]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$manshoe[1]['gname']}</div>
+                                    <div class="info">{$manshoe[1]['price']} </div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$manshoe[1]['pic1']}" alt="" />
+                            </a>
+                            <a class="grid grid-s" href="{$manshoe[2]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$manshoe[2]['gname']}</div>
+                                    <div class="info">{$manshoe[2]['price']}</div>
+                                </div>
+                                <img src="__PUBLIC__/Home/uploads/placeholder.gif" data-echo="{$manshoe[2]['pic1']}" alt="" />
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a class="grid grid-b" href="{$manshoe[3]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$manshoe[3]['gname']}</div>
+                                    <div class="info">{$manshoe[3]['price']}</div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$manshoe[3]['pic1']}" alt="" />
+                            </a>
+                            <a class="grid grid-m" href="{$manshoe[4]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$manshoe[4]['gname']}</div>
+                                    <div class="info">{$manshoe[4]['price']} </div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$manshoe[4]['pic1']}" alt="" />
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a class="grid grid-s" href="{$manshoe[5]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$manshoe[5]['gname']}</div>
+                                    <div class="info">{$manshoe[5]['price']}</div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$manshoe[5]['pic1']}" alt="" />
+                            </a>
+                            <a class="grid grid-s" href="{$manshoe[6]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$manshoe[6]['gname']}</div>
+                                    <div class="info">{$manshoe[6]['price']} </div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$manshoe[6]['pic1']}" alt="" />
+                            </a>
+                            <a class="grid grid-s" href="{$manshoe[7]['url']}">
+                                <div class="inner-text">
+                                    <div class="tit">{$manshoe[7]['gname']}</div>
+                                    <div class="info">{$manshoe[7]['price']} </div>
+                                </div>
+                                <img src='__PUBLIC__/Home/uploads/placeholder.gif' data-echo="{$manshoe[7]['pic1']}" alt="" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            
+
+        </div>
+    </div>
+</block>
+</body>
+<block name='javas'>
+<script src="__PUBLIC__/Home/js/jquery.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/Home/js/slick/slick.css"/>
+<script src="__PUBLIC__/Home/js/global.js"></script>
+<script src="__PUBLIC__/Home/js/echo.js"></script>
+<script>
+
+
+//懒加载
+Echo.init({
+    offset: 500,//离可视区域多少像素的图片可以被加载
+　　 throttle: 1000 //图片延时多少毫秒加载
+});
+
+//广告
+setTimeout(function(){
+    $('#advertise').fadeOut();
+},50000);
+
+
+</script>
+</block>
+</html>

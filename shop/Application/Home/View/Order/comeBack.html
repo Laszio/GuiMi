@@ -1,0 +1,151 @@
+<extend name="Common/index" />
+<block name="main">
+    <div class="wrapper uc-router">
+        <ul>
+            <li><a href="">首页</a></li>
+            <li><span class="divider"></span></li>
+            <li><span>个人中心</span></li>
+        </ul>
+    </div>
+
+    <div class="wrapper">
+        <div class="uc-main clearfix">
+            <div class="uc-aside">
+                <div class="uc-menu">
+                    <div class="tit">订单中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/allOrder')}">我的订单</a></li>
+                        <li><a href="{:U('User/favorite')}">我的收藏</a></li>
+                        <li><a href="{:U('History/index')}">浏览历史</a></li>
+                        <li><a href="{:U('Score/index')}">个人积分</a></li>
+                    </ul>
+                    <div class="tit">客户服务</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/comeBackInfo')}">退货中心</a></li>
+                    </ul>
+                    <div class="tit">账户中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('User/userInfo')}">账户信息</a></li>
+                        <li><a href="{:U('User/safe')}">账户安全</a></li>
+                        <li><a href="{:U('Address/index')}">收货地址</a></li>
+                    </ul>
+                    <div class="tit">消息中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/waitEvaluate')}">商品评价</a></li>
+                        <li><a href="{:U('Message/index')}">站内消息</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uc-content">
+                <div class="uc-panel">
+                    <div class="uc-bigtit">退货申请</div>
+                    <div class="uc-panel-bd">
+                        <table class="refund-returns-list">
+                            <tr class="head bd-t">
+                                <td width="370" class="first">商品信息</td>
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr class="item-head">
+                                <td colspan="4">
+                                    <div class="fl">
+                                        订单编号: {$orderInfo['id']}
+                                    </div>
+                                    <div class="fr">时间：{$orderInfo['addtime']}  </div>
+                                </td>
+                            </tr>
+                            <tr class="item">
+                                <td class="first">
+                                    <div class="good-desc">
+                                        <img class="gimg" src="__ROOT__/Uploads{$detailInfo['colorpic']}" alt="" />
+                                        <div class="ginfo">
+                                            {$detailInfo['gname']}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>单价：{$detailInfo['price']}元×{$detailInfo['num']}</td>
+                                <td>合计：<span class="text-danger">{$detailInfo['total']}元</span></td>
+                                <td width="160">
+                                    <span class="btn-get-wl" >物流信息<i class="caret"></i>
+                                        <div class="wl-toggle">
+                                            <div class="inner-box">
+                                                <i class="arrow"></i>
+                                                <div class="wl-hd">百汇世通:846721123123</div>
+                                                <div class="wl-item active">已签收,签收凭取货吗签收，感谢使用百汇世通及速递易【自提柜】期待再次为你服务</div>
+                                                <div class="wl-item">已签收,签收凭取货吗签收，感谢使用百汇世通及速递易【自提柜】期待再次为你服务</div>
+                                                <div class="wl-item">以上为最新信息跟踪信息 <a class="text-info" href="">查看全部</a></div>
+                                            </div>
+                                        </div>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="refund-returns-panel mt15">
+                            <div class="tabs">
+                                <a class="item active" href="">我要退货</a>
+                            </div>
+                            <form action="" enctype="multipart/form-data" method="post">
+                                <input type="hidden" name="did" value="<?=$_GET['id']?>">
+                                <div class="panel-bd">
+                                    <div class="control-group">
+                                        <div class="hd"><em>*</em>是否收货：</div>
+                                        <div class="bd">
+                                            <label class="check "><input type="radio" checked value="2" name="isget" />已收到货</label>
+                                            <label class="check ml25"><input type="radio"  value="1" name="isget" />未收到货</label>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="hd"><em>*</em>退款原因：</div>
+                                        <div class="bd">
+                                            <select name="reason" id="" class="ui-txtin">
+                                                <option value="">请选择</option>
+                                                <option value="1">七天无理由退货</option>
+                                                <option value="2">我不想要了</option>
+                                                <option value="3">退运费</option>
+                                                <option value="4">颜色/尺寸/参数不符</option>
+                                                <option value="5">商品瑕疵</option>
+                                                <option value="6">质量问题</option>
+                                                <option value="7">少件/漏发</option>
+                                                <option value="8">未按约定时间发货</option>
+                                                <option value="9">收到商品时有划痕或破损</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="hd"><em>*</em>退款金额：</div>
+                                        <div class="bd"><input class="ui-txtin" type="text" name="money"  value="{$detailInfo['total']}" /><span class="ml10 text-muted">最多{$detailInfo['total']}元</span></div>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="hd vat">退款说明：</div>
+                                        <div class="bd"><textarea name="description" id=""  class="ui-txtin" style="width:560px;height:90px;"></textarea><span class="vab dib ml10"></span></div>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="hd vat">上传凭证：</div>
+                                        <div class="bd">
+                                            <label class="ui-uploads">
+                                                <span class="upload-img"></span>
+                                                <input type="file" name="pic[]" multiple id="" />
+                                            </label>
+                                            <div class="mt10 text-muted">每张图片大小不超过5M，最多3张，支持gif、jpg、png、bmp格式</div>
+                                        </div>
+                                    </div>
+                                    <div class="submit-group">
+                                        <input class="ui-btn-theme uc-btn-lg" type="submit" value="提交申请" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="javas">
+<script>
+    $('.check').iCheck({
+            radioClass: 'sty2-radio'
+    });
+</script>
+
+</block>

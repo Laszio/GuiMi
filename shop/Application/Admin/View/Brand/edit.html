@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/lib/html5shiv.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/hui/static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/hui/static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/hui/lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/hui/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/hui/static/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>编辑品牌</title>
+<link href="__PUBLIC__/Admin/hui/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="page-container">
+	<form action="{:U('edit')}"  method="post" class="form form-horizontal" id="form-article-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>Logo上传：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<label><input id="ifile" type="file" style="display:none" name="logo" /><a class="btn btn-primary radius"><i class="Hui-iconfont">&#xe642;</i> 选择照片<a></label>
+				<empty name="editImg">
+					<div id="img" style="width:100px;height:50px;">
+						<img style="width:100px;height:50px;" src="__ROOT__/Uploads/{$list['logo']}" alt="">
+					</div>
+				<else />
+					<div id="img" style="width:100px;height:50px;">
+						<img style="width:100px;height:50px;" src="__ROOT__/Uploads/{$editImg}" alt="">
+					</div>
+				</empty>				
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>品牌名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$list['brand_name']}" placeholder="" id="" name="brand_name">
+			</div>
+		</div>
+		
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>选择分类：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box">
+				<select name="tid" class="select">
+					<foreach name="types" item="v">
+						<option {$list['tid']==$v['id']?'selected':''} typename="{$v['name']}" {$v['attr']<3?'disabled':''} value="{$v['id']}">{$v['tname']}</option>
+					</foreach>
+				</select>
+				</span>
+			</div>
+		</div>	
+		
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>品牌简介：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="des" cols="" rows="" class="textarea"  placeholder="说点什么..." datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！" >{$list['des']}</textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+			</div>
+		</div>
+		
+		
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button editid="{:I('get.id')}" id="ibtn" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 添加</button>
+				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/lib/webuploader/0.1.5/webuploader.min.js"></script> 
+<script type="text/javascript">
+	$(function() {
+		$('#ifile').change(function() {
+			var editid = $("#ibtn").attr('editid');
+			$(this).wrap('<form id="" action="__URL__/editPreview/id/'+editid+'" method="post" enctype="multipart/form-data"></form>').parent().submit();
+		});
+
+
+		$("#ibtn").click(function() {
+			var brand_name = $('input[name="brand_name"]').val();
+			var tid = $('select[name="tid"] option:selected ').attr('value');
+			var typename = $('select[name="tid"] option:selected ').attr('typename');
+			var des = $('textarea').val();
+			var id = $(this).attr('editid');
+
+			$.ajax({
+				url: '__URL__/edit',
+				type:'post',
+				data:{brand_name: brand_name, tid: tid, des: des, typename: typename, id:id},
+				async: true,
+				success: function(res) {
+					if (res.status == 0) {
+						alert(res.msg);
+					} else if (res.status == 1) {
+						alert(res.msg);
+						window.parent.location.reload();						
+						var index = parent.layer.getFrameIndex(window.name);
+						parent.layer.close(index);
+					}
+				}
+			});
+
+			return false;
+		});
+
+	});
+
+</script>
+</body>
+</html>

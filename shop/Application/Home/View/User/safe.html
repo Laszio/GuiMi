@@ -1,0 +1,76 @@
+<extend name="Common/index" />
+<block name="main">
+    <div class="wrapper uc-router">
+        <ul>
+            <li><a href="">首页</a></li>
+            <li><span class="divider"></span></li>
+            <li><span>个人中心</span></li>
+        </ul>
+    </div>
+
+    <div class="wrapper">
+        <div class="uc-main clearfix">
+            <div class="uc-aside">
+                <div class="uc-menu">
+                    <div class="tit">订单中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/allOrder')}">我的订单</a></li>
+                        <li><a href="{:U('User/favorite')}">我的收藏</a></li>
+                        <li><a href="{:U('History/index')}">浏览历史</a></li>
+                        <li><a href="{:U('Score/index')}">个人积分</a></li>
+                    </ul>
+                    <div class="tit">客户服务</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/comeBackInfo')}">退货中心</a></li>
+                    </ul>
+                    <div class="tit">账户中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('User/userInfo')}">账户信息</a></li>
+                        <li><a href="{:U('User/safe')}">账户安全</a></li>
+                        <li><a href="{:U('Address/index')}">收货地址</a></li>
+                    </ul>
+                    <div class="tit">消息中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/waitEvaluate')}">商品评价</a></li>
+                        <li><a href="{:U('Message/index')}">站内消息</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uc-content">
+                <div class="uc-panel">
+                    <div class="uc-bigtit bd-b">账号安全</div>
+                    <div class="uc-panel-bd">
+
+                        <div class="safe-list">
+                            <div class="list-item">
+                                <a href="{:U('User/checkPwd')}" class="edit ui-btn-low ui-btn-hollow uc-btn-md">修改</a>
+                                <div class="cont">
+                                    <img src="__PUBLIC__/Home/img/uc/pwd.jpg" class="ico" />
+                                    <div class="tit">帐号密码</div>
+                                    <div class="desc">用于保护帐号信息和登录安全</div>
+                                </div>
+                            </div>
+                            <div class="list-item">
+                                <a href="{:U('User/checkEmail')}" class="edit ui-btn-low ui-btn-hollow uc-btn-md">修改</a>
+                                <div class="cont">
+                                    <img src="__PUBLIC__/Home/img/uc/mail.jpg" class="ico" />
+                                    <div class="tit">安全邮箱 {$userEmail}<span class="safe-status"><i class="iconfont icon-yanzheng text-success"></i>已绑定</span></div>
+                                    <div class="desc">安全邮箱可以用于登录小米帐号，重置密码或其他安全验证</div>
+                                </div>
+                            </div>
+<!--                             <div class="list-item">
+                                <a href="uc-verify.html" class="edit ui-btn-low ui-btn-hollow uc-btn-md">修改</a>
+                                <div class="cont">
+                                    <img src="__PUBLIC__/Home/img/uc/phone.jpg" class="ico" />
+                                    <div class="tit">安全手机<span class="safe-status"><i class="iconfont icon-warn text-danger"></i>未绑定</span></div>
+                                    <div class="desc">安全手机将可用于登录小米帐号和重置密码，建议立即设置</div>
+                                </div>
+                            </div> -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

@@ -1,0 +1,287 @@
+<extend name="Common/index" />
+<block name="main" >
+    <div class="wrapper uc-router">
+        <ul>
+            <li><a href="">首页</a></li>
+            <li><span class="divider"></span></li>
+            <li><span>个人中心</span></li>
+        </ul>
+    </div> 
+
+    <div class="wrapper">
+        <div class="uc-main clearfix">
+            <div class="uc-aside">
+                <div class="uc-menu">
+                    <div class="tit">订单中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/allOrder')}">我的订单</a></li>
+                        <li><a href="{:U('User/favorite')}">我的收藏</a></li>
+                        <li><a href="{:U('History/index')}">浏览历史</a></li>
+                    </ul>
+                    <div class="tit">客户服务</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/comeBackInfo')}">退货中心</a></li>
+                    </ul>
+                    <div class="tit">账户中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('User/userInfo')}">账户信息</a></li>
+                        <li><a href="{:U('User/safe')}">账户安全</a></li>
+                        <li><a href="{:U('Address/index')}">收货地址</a></li>
+                    </ul>
+                    <div class="tit">消息中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/waitEvaluate')}">商品评价</a></li>
+                        <li><a href="{:U('Message/index')}">站内消息</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uc-content">
+                <div class="uc-panel">
+                    <div class="uc-bigtit">收货地址</div>
+                    <div class="uc-panel-bd">
+
+                            <!-- <div class="ui-msg-info ui-msg-block">您已创建 2 个收货地址，最多可创建 5 个</div> -->
+
+                            <div class="address-list">
+                                <div class="col col-4">
+                                    <a class="item va-m-box ta-c add">
+                                        <div class="add-new">
+                                            <span class="ico"><i class="iconfont icon-tianjia"></i></span>
+                                            <div class="label">添加收货地址</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <foreach name="addressList" item="v">
+                                    <div class="col col-4 lz-div">
+                                        <div class="item {$v['state'] == 2 ? 'active': ''}">
+                                            <div class="action">
+                                                <div class="fl">
+                                                    <a class="edit" val="{$v['id']}" href="javascript:;">修改</a>
+                                                    <a val="{$v['id']}"  class="del lz-del" href="javascript:;">删除</a></div>
+                                                <div class="fr"><a class="setdft lz-default" href="javascript:;">设为默认</a></div>
+
+                                            </div>
+                                            <div class="info">
+                                                <div class="info-item name ellipsis">{$v['area']}（{$v['name']} 收）</div>
+                                                <div class="info-item address">{$v['address']}</div>
+                                                <div class="info-item tel ellipsis">{$v['phone']}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </foreach>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="bg-body" style="display: none"> </div>
+    <div id="addressform" style="display:none" class="layer-address">
+        <form class="lz-form" action="" method="post">
+            <div>
+                <input class="hid" type="hidden" name="">
+            </div>
+            <div class="control-group">
+                <div class="hd">
+                    收货人姓名：
+                </div>
+                <div class="bd">
+                    <input class="ui-txtin ui-txtin-thin lz-name" style="width: 200px;" type="text" name="name" id="">
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="hd">
+                    联系电话：
+                </div>
+                <div class="bd">
+                    <input class="ui-txtin ui-txtin-thin lz-phone" style="width: 200px;" type="text" name="phone" id="">
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="hd">
+                    所在地区：
+                </div>
+                <div class="bd">
+                    <select class="ui-txtin ui-txtin-thin" id="lz-sf" style="width: 133px;"  name="sf">
+                        <option value="">选择省</option>
+                        <foreach name="list" item="v">
+                            <option value="{$v['id']}">--{$v['area_name']}--</option>
+                        </foreach>
+                    </select>
+                    <select class="ui-txtin ui-txtin-thin" id="lz-city" style="width: 133px;" name="city">
+                        <option value="">选择市</option>
+                    </select>
+                    <select class="ui-txtin ui-txtin-thin" id="lz-area" style="width: 133px;" name="area">
+                        <option value="">选择区</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="hd">
+                    详细地址：
+                </div>
+                <div class="bd">
+                    <input class="ui-txtin ui-txtin-thin lz-address" style="width: 500px;" type="text" name="address" id="" placeholder="请填写具体地址，不需要重复填写省/市/区">
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="hd">
+                    邮政编码：
+                </div>
+                <div class="bd">
+                    <input class="ui-txtin ui-txtin-thin lz-code" style="width: 200px;" type="text" name="code" id="">
+                </div>
+            </div>
+            <div class="control-bottom clearfix">
+                <button class="fl btn ui-btn-theme">保存</button><a href="" class="fr btn ui-btn cancle">取消</a>
+            </div>
+        </form>
+    </div>
+</block>
+<block name='javas' >
+<script src="__PUBLIC__/Home/js/layer/layer.js"></script>
+<script>
+var heigh= $(document).height();
+$('.address-list .add').click(function() {
+    $('.lz-name').attr('value', '');
+    $('.lz-code').attr('value', '');
+    $('.lz-address').attr('value', '');
+    $('.lz-phone').attr('value', '');
+    $('.lz-form').attr('action', '');
+    show(); 
+});
+$('.clearfix .cancle').click(function() {
+    $("#addressform").css({'display':'none'});
+    $("#bg-body").css({'display':'none'});
+    return false;
+});
+
+$('.lz-del').click(function() {
+    var val = $('.lz-del').attr('val');
+    var fd = $(this).parent().parent().parent();
+    console.log(val);
+    $.ajax({
+        url:"{:U('Address/del')}",
+        data:'id='+val,
+        type:'get',
+        success:function (res) {
+            if (res !== 0) {
+                window.location.reload();
+            }
+        }
+    });
+});
+
+$('.lz-default').click(function() {
+    var val = $(this).parent().prev().children('.lz-del').attr('val');
+    $.ajax({
+        url:"{:U('Address/setDefault')}",
+        data:'id='+val,
+        type:'get',
+        success:function (res) {
+            console.log(res);
+            if (res !== 0) {
+                window.location.reload();
+            }
+        }
+    });
+});
+
+$('.address-list .fl .edit').click(function() {
+    var val = $(this).attr('val');
+    $('#addressform .lz-form .hid').attr('name','id');
+    $('#addressform .lz-form .hid').attr('value',val);
+    // 需要ajax去添加表单信息
+    $.ajax({
+        url:"{:U('Address/getAddressInfo')}",
+        data:'id='+val,
+        type:'post',
+        async:false,
+        success:function(res){
+            if (res !== 0) {
+
+                $('.lz-name').attr('value', res.name);
+                $('.lz-code').attr('value', res.code);
+                $('.lz-address').attr('value', res.address);
+                $('.lz-phone').attr('value', res.phone);
+                $('.lz-form').attr('action', "{:U('Address/edit')}");
+
+            }
+        }
+    });
+    show(); 
+});
+function show() {
+    $("#addressform").css({
+        'width':650,
+    'height':350,
+    'background-color':'#FFf',   
+    'margin': 'auto',
+    'position': 'absolute',
+    'z-index':9999999999,
+    'top': 300,
+    'bottom': 0,
+
+    'left': 0,
+    'right': 0,
+    'display':'block',
+    });
+    $('#bg-body').css({
+        'width':'100%',
+    'height':heigh,
+    'background-color':'#000',
+    'position':'absolute',
+    'top':0,
+    'left':0,
+    'z-index':999999999,
+    'opacity':0.3,
+    'display':'block',
+    });
+}
+
+ 
+    $('#addressform #lz-sf').change(function(){
+        var val = $(this).val();
+        console.log(val);
+        $('#addressform #lz-city').empty();
+        $('#addressform #lz-city').append('<option value="">选择市</option>');
+        $('#addressform #lz-area').empty();
+        $('#addressform #lz-area').append('<option value="">选择区</option>');
+       $('#addressform #lz-city').length=1;
+       $.ajax({
+            url:"{:U('User/getArea')}",
+            type:'get',
+            data:'id='+val,
+            success:function(res){
+                var data = JSON.parse(res);
+                console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    $('#addressform #lz-city').append('<option value="'+data[i].id+'">'+data[i].area_name+'</option>');
+                }
+            }
+        });
+    });
+
+    $('#addressform #lz-city').change(function(){
+        console.log($(this));
+        var val = $(this).val();
+        console.log(val);
+        $('#addressform #lz-area').empty();
+        $('#addressform #lz-area').append('<option value="">选择区</option>');
+       $('#addressform #lz-area').length=1;
+       $.ajax({
+            url:"{:U('User/getArea')}",
+            post:'get',
+            data:'id='+val,
+            success:function(res){
+                var data = JSON.parse(res);
+                console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    $('#addressform #lz-area').append('<option value="'+data[i].id+'">'+data[i].area_name+'</option>');
+                }
+            }
+        });
+    });
+
+</script>
+</block>

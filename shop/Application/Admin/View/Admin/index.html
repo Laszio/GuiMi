@@ -1,0 +1,220 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="Bookmark" href="/favicon.ico" >
+<link rel="Shortcut Icon" href="/favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/hui/static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/hui/static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/hui/lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/hui/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/hui/static/h-ui.admin/css/style.css" />
+
+<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>管理员列表</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 管理员管理 <span class="c-gray en">&gt;</span> 管理员列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav><span class="l">
+<div class="page-container">
+
+
+	<table class="table table-border table-bordered table-bg table-sort">
+		<thead>
+			<tr>
+				<th ><a href="javascript:;" onclick="admin_add('添加管理员','{:U('Admin/addAdmin')}','800','500')" class="btn btn-success size-M radius">
+					<i class="Hui-iconfont" style="font-size: 18px;">&#xe607;</i></a></th>
+			<th scope="col" colspan="10" style="text-align: center;"><h4 style="padding: 0;margin: 0;"><b class="Hui-iconfont Hui-iconfont-user">管理员列表</b></h4></th>
+			</tr>
+			<tr class="text-c">
+
+				<th width="40">ID</th>
+				<th width="150">登录名</th>
+				<th width="90">手机</th>
+				<th width="150">邮箱</th>
+				<th width="150">注册时间</th>
+				<th width="130">最后登录时间</th>
+				<th width="130">最后登录ip</th>
+				<th width="80">状态</th>
+				<th width="100">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<foreach name="list" item="info">
+				<tr class="text-c">
+					<td>{$info['id']}</td>
+					<td>{$info['username']}</td>
+					<td>{$info['phone']}</td>
+					<td>{$info['Email']}</td>
+					<td>{$info['addtime']}</td>
+					<td>{$info['logtime']}</td>
+					<td>{$info['logip']}</td>
+					<td class="td-status">
+						<span class="label <?php echo $info['status'] == '1' ? 'label-success' : 'label-default';?> radius">{$info['status-msg']}</span>
+					</td>
+					<td class="td-manage">
+					<if condition="$info['status'] == '1'">
+							<a style="text-decoration:none" onClick="admin_stop(this,{$info['id']})" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a> 
+					<else/>
+							<a onClick="admin_start(this,{$info['id']})" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>
+					</if>
+						<a title="修改资料" href="javascript:;" onclick="admin_edit('管理员编辑','{:U('Admin/Admin/edit/id/'.$info['id'])}',{$info['id']},'800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> 
+						<a title="修改权限" href="javascript:;" onclick="admin_edit('修改权限','{:U('Admin/Admin/editRole/id/'.$info['id'])}',{$info['id']},'800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe63f;</i></a> 
+						<a title="删除" href="javascript:;" onclick="admin_del(this,{$info['id']})" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				</tr>
+			</foreach>
+		</tbody>
+	</table>
+	</div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/Admin/hui/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+
+	$(function(){
+	$('.table-sort').dataTable({
+		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
+		"bStateSave": true,//状态保存
+		"aoColumnDefs": [
+		  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+		  {"orderable":false,"aTargets":[7,8]}// 制定列不参与排序
+		]
+	});
+	
+});
+/*
+	参数解释：
+	title	标题
+	url		请求的url
+	id		需要操作的数据id
+	w		弹出层宽度（缺省调默认值）
+	h		弹出层高度（缺省调默认值）
+*/
+$(".Hui-aside").Huifold({
+	titCell:'.menu_dropdown dl dt',
+	mainCell:'.menu_dropdown dl dd',
+});
+/*管理员-增加*/
+function admin_add(title,url,w,h){
+	layer_show(title,url,w,h);
+}
+/*管理员-删除*/
+function admin_del(obj,id){
+	layer.confirm('确认要删除吗？',function(index){
+		$.ajax({
+			type:'get',
+			url:'{:U("del")}',
+			data:'id='+ id,
+			async:true,
+			success: function(data){
+				if (data.status === 1) { //为1表示正确
+					$(obj).parents("tr").remove();
+					layer.msg(data.msg,{icon:1,time:1000});
+				} else {
+					layer.msg(data.msg,{icon:2,time:1000});
+				}
+			},
+			error:function(data) {
+
+			},
+		});		
+	});
+}
+
+
+/*管理员-编辑*/
+function admin_edit(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+
+/*管理员-修改权限*/
+function admin_edit(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+
+/*管理员-停用*/
+function admin_stop(obj,id){
+	layer.confirm('确认要停用吗？',function(index){
+		//此处请求后台程序，下方是成功后的前台处理……
+		chStatus(id,obj);
+	});
+}
+
+/*管理员-启用*/
+function admin_start(obj,id){
+	layer.confirm('确认要启用吗？',function(index){
+		//此处请求后台程序，下方是成功后的前台处理……
+		chStatus(id,obj);
+	});
+}
+// 上面两个方法都是调用下面这个方法返回数据
+/*ajax-改变管理员-停用-启用*/
+function chStatus(id,obj) {
+	// 记录这个用户的id
+	var theid = id;
+	$.ajax({
+		url:'{:U("chStatus")}',
+		type:'get',
+		data:'id='+ id,
+		async:true,
+		success: function(res) {
+			if (res.status === 3) {
+				layer.msg(res.msg,{icon: 5,time:1000});
+			}
+			if (res.status === 2) {
+				$(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_start(this,'+theid+')" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>');
+				$(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">已禁用</span>');
+				$(obj).remove();
+				layer.msg('已禁用!',{icon: 5,time:1000});
+			}
+			if (res.status === 1) {
+				$(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_stop(this,'+theid+')" href="javascript:;" title="停用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
+				$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
+				$(obj).remove();
+				layer.msg('已启用!', {icon: 6,time:1000});
+					}
+		},
+		error: function(a){
+          alert('出错鸟~~~');
+	      }
+	})
+}
+
+/*管理员-批量删除*/
+$('.lzz-del-all').click(function() {
+ // 找到所有选中的
+ var checkId = $('.table tr td input[type="checkbox"]:checked').map(function() {
+  // 获取ID
+  // console.log(this, $(this).parent().next().html());
+  // 返回ID
+  return $(this).parent().next().html();
+ }).get().join(',');
+ // 发起AJAX请求
+ $.get("{:U('Admin/delAll')}", {'id': checkId }, function(data) {
+ 	if (data > 0) {
+ 		$('.table tr td input[type="checkbox"]:checked').parent().parent().remove();
+ 	}
+ }, 'text');
+
+});
+</script>
+</body>
+</html>

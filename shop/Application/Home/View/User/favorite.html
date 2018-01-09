@@ -1,0 +1,139 @@
+<extend name="Common/index"  />
+<block name="main">
+    <div class="wrapper uc-router">
+        <ul>
+            <li><a href="">首页</a></li>
+            <li><span class="divider"></span></li>
+            <li><span>个人中心</span></li>
+        </ul>
+    </div>
+
+    <div class="wrapper">
+        <div class="uc-main clearfix">
+            <div class="uc-aside">
+                <div class="uc-menu">
+                    <div class="tit">订单中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/allOrder')}">我的订单</a></li>
+                        <li><a href="{:U('User/favorite')}">我的收藏</a></li>
+                        <li><a href="{:U('History/index')}">浏览历史</a></li>
+                        <li><a href="{:U('Score/index')}">个人积分</a></li>
+                    </ul>
+                    <div class="tit">客户服务</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/comeBackInfo')}">退货中心</a></li>
+                    </ul>
+                    <div class="tit">账户中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('User/userInfo')}">账户信息</a></li>
+                        <li><a href="{:U('User/safe')}">账户安全</a></li>
+                        <li><a href="{:U('Address/index')}">收货地址</a></li>
+                    </ul>
+                    <div class="tit">消息中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/waitEvaluate')}">商品评价</a></li>
+                        <li><a href="{:U('Message/index')}">站内消息</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 左边的菜单栏 -->
+            <div class="uc-content">
+                <div class="uc-panel">
+                    <div class="uc-bigtit">我的收藏</div>
+                    <div class="uc-panel-bd">
+                        <div class="uc-tabs">
+                            <a class="item active" href="uc-fav.html">我收藏的商品</a>
+                            <!-- <a class="item" href="uc-fav-shop.html">我收藏的店铺</a> -->
+                        </div>
+                        <table class="uc-table">
+                            <tr class="hd">
+                                <if condition="empty($goodsList)">
+                                    <td style="font-size:28px;">收藏夹为空</td>
+                                <else/>
+                                <td widtd="360" class="align-left" >
+                                    商品名称
+                                </td>
+                                <td width="100">价格</td>
+                                <td width="100">商品情况</td>
+                                <td width="120">操作</td>
+                                <td><a href="" class="del iconfont icon-shanchu"></a></td>
+                                </if>
+                            </tr>
+                            <!-- 收藏夹info -->
+                            <foreach name="goodsList" item="goodsList">
+                            <tr class="fav-goods">
+                                <td class="item">
+                                    <img src="__ROOT__/Uploads{$goodsList['pic1']}" alt="" /><span class="name">{$goodsList['gname']}</span>
+                                </td>
+                                <td><span class="text-theme fwb">{$goodsList['price']*$goodsList['discount']/100}元</span></td>
+                                <if condition="($goodsList['status'] eq 3) or ($goodsList['delsta'] eq 2)">
+                                    <td style="color: #7F7F7F;">商品已下架</td>
+                                <else/>
+                                    <td>现货</td>
+                                </if>
+                                <td>
+                                    <a href="{:U('Home/Goods/index/id/'.$goodsList['id'])}" class="ui-btn-theme uc-btn-md mb5">查看详情</a><br />
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" class="text-warning" id="delfav" val="{$goodsList['id']}">删除</a>
+                                </td>
+                            </tr>
+                            </foreach>
+
+                        </table>
+                        <!-- <div class="pages">
+                            <a class="page prev" href="">上一页</a>
+                            <a class="page" href="">1</a>
+                            <span class="cur-page">2</span>
+                            <a class="page" href="">3</a>
+                            <a class="page" href="">4</a>
+                            <i class="page-split">...</i>
+                            <a class="page" href="">71</a>
+                            <a class="page next" href="">下一页</a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="javas">
+<script src="js/jquery.js"></script>
+<link rel="stylesheet" href="js/icheck/style.css"/>
+<script src="js/icheck/icheck.min.js"></script>
+<script src="js/global.js"></script>
+<script>
+$('#delfav').click(function() {
+    thisTR = $(this).parent().parent();
+    console.log($(".fav-goods").length);
+
+    gid = $(this).attr('val');
+    $(thisTR).remove();
+    $.ajax({
+        type: "POST",
+        url: "{:U('User/delFav')}",
+        data: {gid:gid},
+        dataType: "json",
+        success: function(msg){
+            if (msg.status === 1) {
+                console.log(msg.msg);
+
+            } else {
+                console.log(msg.msg);
+            }
+            if (($(".fav-goods").length) === 0) {
+                        // location.reload();
+                        console.log('没有了');
+                        $('.hd').html('<td style="font-size:28px;">收藏夹为空</td>');
+                    }
+        }
+    });
+})
+$(function () {
+    $('.check input').iCheck({
+            checkboxClass: 'sty1-checkbox'
+        });
+});
+</script>
+</block>

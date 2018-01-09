@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/hui/static/h-ui/css/H-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/hui/static/h-ui.admin/css/H-ui.admin.css" />
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/hui/lib/Hui-iconfont/1.0.8/iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/hui/static/h-ui.admin/skin/default/skin.css" id="skin" />
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/hui/static/h-ui.admin/css/style.css" />
+
+    <script type="text/javascript" src="__PUBLIC__/Admin/bs/js/jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet" href="__PUBLIC__/Admin/bs//css/bootstrap.min.css" media="screen" />  
+    <link rel="stylesheet" href="__PUBLIC__/Admin/bs//css/style.css" /> 
+    <!--响应式特性 css-->    
+    <link href="__PUBLIC__/Admin/bs//css/bootstrap-responsive.min.css" rel="stylesheet">
+    <!-- jquery -->
+    <script type="text/javascript" src="__PUBLIC__/Admin/bs//js/jquery-1.8.3.min.js"></script>
+    <!-- bootstrap.js -->
+    <script type="text/javascript" src="__PUBLIC__/Admin/bs//js/bootstrap.min.js"></script>
+</head>
+<nav style="height: 24px" class="breadcrumb"><a href="{:U('Goods/editDes')}"></a><a class="btn btn-success radius r" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<body>
+	<div style="margin-top:-30px ">
+		<br><span>　</span>
+		<a href="{:U('Goods/index')}"><button class="btn btn-info" ">返回</button></a>
+		<button class="btn btn-info" onclick="change(1)">商品描述</button>
+		<button class="btn btn-info" onclick="change(-1)">商品套餐</button>
+	</div>
+	<br>
+	<div  class="row-fluid"  id="goods-des" style="display:block">
+		
+		<div class="span8 offset2">
+		<div style="margin-left: -80px ">
+			<a href="{:U('Goods/editDes', ['id'=>I('get.id')])}"><button class="btn">修改</button></a>
+			<empty name="desInfo"><a href="{:U('Goods/addDes', ['id'=>I('get.id')])}"><button class="btn">添加</button></a></empty>
+		</div><br>
+			<table class="table table-striped " style="width: 900px; margin-left: -100px">
+				<tbody>
+
+					<tr>
+						<th>商品简介</th>
+						<td>{$desInfo['des']}</td>
+					</tr>
+					<tr>
+					<tr>
+						<th>季节</th>
+						<td>{$desInfo['season']}</td>
+					</tr>
+					<tr>
+						<th>风格</th>
+						<td>{$desInfo['style']}</td>
+					</tr>
+					
+					<tr>
+						<th>尺码说明</th>
+						<td>
+							<a href="{:U('Goods/editGuide', ['id'=>$desInfo['id'], 'gid'=>$_GET['id']])}"><img src="__ROOT__/Uploads{$desInfo['guide']}" alt=""></a>
+						</td>
+					</tr>
+					<tr>
+						<th>试穿效果</th>
+						<td>
+							<a href="{:U('Goods/editDress', ['id'=>$desInfo['id'], 'gid'=>$_GET['id'],'marke'=>1])}"><img src="__ROOT__/Uploads{$desInfo['dress1']}" alt=""></a>
+						</td>
+					</tr>
+					<tr>
+						<th></th>
+						<td>
+							<a href="{:U('Goods/editDress', ['id'=>$desInfo['id'], 'gid'=>$_GET['id'],'marke'=>2])}"><img src="__ROOT__/Uploads{$desInfo['dress2']}" alt=""></a>
+						</td>
+					</tr>
+					<tr>
+						<th></th>
+						<td>
+							<a href="{:U('Goods/editDress', ['id'=>$desInfo['id'], 'gid'=>$_GET['id'],'marke'=>3])}"><img src="__ROOT__/Uploads{$desInfo['dress3']}" alt=""></a>
+						</td>
+					</tr>
+					<tr>
+						<th></th>
+						<td>
+							<a href="{:U('Goods/editDress', ['id'=>$desInfo['id'], 'gid'=>$_GET['id'],'marke'=>4])}"><img src="__ROOT__/Uploads{$desInfo['dress4']}" alt=""></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div id="goods-pro" style="display: none">
+		<div style="margin-left: 120px ">
+			<a href="{:U('Goods/addProperty', ['id'=>I('get.id')])}">　<button class="btn">添加</button></a>
+		</div><br>
+
+		<foreach name="proInfo" item="v">
+			<div class="span8 offset2">
+			<a  class="btn" href="{:U('Goods/editProperty', ['id'=>$v['id'], 'gid'=>I('get.id')])}">修改</a><br>
+				<table class="table table-striped " style="border: 1px solid lightblue">
+					<tbody>
+						<tr>
+							<th>尺码</th>
+							<td>{$v['size']}</td>
+						</tr>
+						<tr>
+							<th>库存</th>
+							<td>{$v['store']}</td>
+						</tr>
+						<tr>
+							<th>颜色</th>
+							<td>{$v['color']}</td>
+						</tr>
+						<tr>
+							<th>样品缩略图</th>
+							<td>
+								<img src="__ROOT__/Uploads{$v['colorpic']}" alt="{$v['color']}">
+							</td>
+						</tr>
+						
+					</tbody>
+				</table>
+			</div>
+	 	</foreach>
+		
+	</div>
+</body>
+
+<script>
+function change(i) {
+	if (i<0) {
+		$('#goods-des').css({'display':'none'});
+		$('#goods-pro').css({'display':'block'});
+	} else {
+		$('#goods-des').css({'display':'block'});
+		$('#goods-pro').css({'display':'none'});
+
+	}
+}
+</script>
+</html>

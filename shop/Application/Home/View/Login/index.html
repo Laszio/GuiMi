@@ -1,0 +1,99 @@
+<extend name='Public/first' />
+<block>    
+    <title>登陆</title>
+</block>
+<block name='main'>
+    <div class="login-main-wrap">
+        <div class="login-main wrapper">
+            <div class="login-box" style=''>
+                <form action="" method="post">
+                    <div class="box-hd">
+                        <span class="tit">用户登录</span>
+                        <a href="{:U('Register/index')}">注册新账号</a>
+                    </div>
+                    <label class="txtin-box">
+                        <span class="ico user"></span>
+                        <input class="txtin" type="text" name="character" placeholder="用户名/手机/email" />
+                    </label>
+                    <label class="txtin-box">
+                        <span class="ico pwd"></span>
+                        <input class="txtin" type="password" name="pass" placeholder="密码" />
+                    </label>
+                    <if condition="$btn == 1">
+                     <label class="txtin-box" >
+                        <span style='position:absolute;left:16px;top:6px;font-size:20px;color:red;' class='show'>X</span>
+                        <input class="txtin" style='width:190px;float:left;margin-right:10px' type="text" name="verify" placeholder="验证码" />
+                        <img src="{:U('Login/createVerify')}" class="get-yzm" style='width:130px;height:42px'>
+                    </if>
+                    </label>
+                    <div class="clearfix tool">
+                        <label class="check"><input type="checkbox" id="auto_login" name='auto'
+                         value='1' />自动登录</label>
+                        <a class="find" href="{:U('Register/forgot')}">忘记密码？</a>
+                    </div>
+                    <input class="tj" type="submit" value="登&ensp;录" />
+                    <div class="other-way clearfix">
+                        <a class="item first" href="{:U('QQLogin/qqLogin')}">
+                            <img src="__PUBLIC__/Home/img/login/qq.jpg" alt="" class="ico" style='width:55px'/>
+                            <span class="label">QQ</span>
+                        </a>
+                        <a class="item" href="">
+                            <img src="__PUBLIC__/Home/img/login/weixin.jpg" alt="" class="ico" style='width:55px'/>
+                            <span class="label">微信</span>
+                        </a>
+                        <a class="item" href="">
+                            <img src="__PUBLIC__/Home/img/login/sina.jpg" alt="" class="ico" style='width:55px'/>
+                            <span class="label">新浪</span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+   </block>
+
+   <block name='js'>
+    <script>
+
+//验证验证码
+$("input[name=verify]").on('blur',function ()
+        {
+            if ($(this).siblings('.show').html() != '√') {
+               
+                $.ajax({
+                    type:'POST',
+                    data:{parm:$(this).val()},
+                    url:'{:U('Login/createVerify')}',
+                    success:function (data) {
+                        if (data.status == 1)
+                        $("input[name=verify]").siblings('.show').html('√');
+                        $("input[name=verify]").siblings('.show').css({'color':'green'});
+                    },
+                });
+            }
+
+        });
+
+    //验证码刷新
+    $('.get-yzm').on('click',function(){
+        if($("input[name=verify]").siblings('.show').html() == 'X') {
+
+            this.src = "{:U('Login/createVerify?rand=')}";
+
+        }
+    });
+
+    //登录前判断是否验证
+    $('input[type=submit]').on('click',function () 
+        {
+            
+            if ($("input[name=verify]") != undefined) {
+                if ($("input[name=verify]").siblings('.show').html() == 'X') {
+                    alert('请输入验证码');
+                    return false;
+                }
+            }
+        });
+    </script>
+
+   </block>

@@ -1,0 +1,149 @@
+<extend name="Common/index" />
+<!-- 主体 -->
+<block name="main">
+	<div class="wrapper uc-router">
+        <ul>
+            <li><a href="">首页</a></li>
+            <li><span class="divider"></span></li>
+            <li><span>个人中心</span></li>
+        </ul>
+    </div>
+
+    <div class="wrapper">
+        <div class="uc-main clearfix">
+            <div class="uc-aside">
+                <div class="uc-menu">
+                    <div class="tit">订单中心</div>
+                    <ul class="sublist">
+                        <li><a href="">我的订单</a></li>
+                        <li><a href="">我的收藏</a></li>
+                        <li><a href="">浏览历史</a></li>
+                    </ul>
+                    <div class="tit">客户服务</div>
+                    <ul class="sublist">
+                        <li><a href="">取消订单记录</a></li>
+                        <li><a href="">退款/退货</a></li>
+                    </ul>
+                    <div class="tit">账户中心</div>
+                    <ul class="sublist">
+                        <li><a href="">账户信息</a></li>
+                        <li><a href="">账户安全</a></li>
+                        <li><a href="">消费记录</a></li>
+                        <li><a href="">收货地址</a></li>
+                    </ul>
+                    <div class="tit">消息中心</div>
+                    <ul class="sublist">
+                        <li><a href="">商品评价</a></li>
+                        <li><a href="">站内消息</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uc-content">
+                <div class="uc-panel">
+                    <div class="uc-bigtit">商品评价</div>
+                    <div class="uc-panel-bd">
+                        <table class="refund-returns-list">
+                            <tr class="head bd-t">
+                                <td width="370" class="first">商品信息</td>
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr class="item-head">
+                                <td colspan="4">
+                                    <div class="fl">
+                                        订单编号: 1947584672162364
+                                    </div>
+                                   <!--  <div class="fr">申请时间：2016-05-29 16:02   </div> -->
+                                </td>
+                            </tr>
+                            <tr class="item">
+                                <td class="first">
+                                    <div class="good-desc">
+                                        <img class="gimg" src="uploads/9.jpg" alt="" />
+                                        <div class="ginfo">
+                                            小米短袖T恤 五彩换<br />
+                                            单价：188元
+                                        </div>
+                                    </div>
+                                </td>
+                               <!--  <td>单价：499.00元×1</td>
+                                <td>合计：<span class="text-danger">499.00元</span></td> -->
+                                <td>颜色：<span class="text-danger">红色</span></td>
+                                <td>码数：<span class="text-danger">S</span></td>
+                                <td width="160">
+                                    <span class="btn-get-wl" >物流信息<i class="caret"></i>
+                                        <div class="wl-toggle">
+                                            <div class="inner-box">
+                                                <i class="arrow"></i>
+                                                <div class="wl-hd">百汇世通:846721123123</div>
+                                                <div class="wl-item active">已签收,签收凭取货吗签收，感谢使用百汇世通及速递易【自提柜】期待再次为你服务</div>
+                                                <div class="wl-item">已签收,签收凭取货吗签收，感谢使用百汇世通及速递易【自提柜】期待再次为你服务</div>
+                                                <div class="wl-item">以上为最新信息跟踪信息 <a class="text-info" href="">查看全部</a></div>
+                                            </div>
+                                        </div>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="refund-returns-panel mt15">
+                            <div class="tabs">
+                                <a class="item active" href="">发表评论</a>
+                            </div>
+                            <div class="panel-bd">
+	                            <form action="{:U('sendComment')}" method="get">
+	                                <div class="control-group">
+	                                    <div class="hd"><em>*</em>评论等级：</div>
+	                                    <div class="bd jin-comment" style="list-style: none">
+	                                        <!-- <label class="check"><input type="radio" name="sex" />未收到货</label>
+	                                        <label class="check ml25"><input type="radio" name="sex" />已收到货</label> -->
+	                                        <li style="float:left;">
+	                                        	<img class="comment-img" style="width:50px;height:35px;" src="__ROOT__/Uploads/CommentLogo/default.png" data-src="__ROOT__/Uploads/CommentLogo/good.png" alt="">
+	                                        	<span>好评</span>
+	                                        </li>
+	                                        <li style="float:left;margin-left:50px;">
+	                                        	<img class="comment-img" style="width:50px;height:35px;" src="__ROOT__/Uploads/CommentLogo/default.png" data-src="__ROOT__/Uploads/CommentLogo/middle.png" alt="">
+	                                        	<span>中评</span>
+	                                        </li>
+	                                        <li style="float:left;margin-left:50px;">
+	                                        	<img class="comment-img" style="width:50px;height:35px;" src="__ROOT__/Uploads/CommentLogo/default.png" data-src="__ROOT__/Uploads/CommentLogo/bad.png" alt="">
+	                                        	<span>差评</span>
+	                                        </li>
+	                                    </div>
+	                                </div>
+	                                ·
+	                                <div class="control-group">
+	                                    <div class="hd vat"><em>*</em>评论内容：</div>
+	                                    <div class="bd"><textarea placeholder="请写下对宝贝的感受哦，对其他人的帮助很大哦" name="" id=""  class="ui-txtin" style="width:560px;height:90px;"></textarea><span class="vab dib ml10">还可以输入200字</span></div>
+	                                </div>
+	                                <div class="control-group">
+	                                    <div class="hd vat">晒图片：</div>
+	                                    <div class="bd">
+	                                        <label class="ui-uploads">
+	                                            <span class="upload-img"></span>
+	                                            <input type="file" name="" id="" />
+	                                        </label>
+	                                        <div class="mt10 text-muted">每张图片大小不超过1M，最多3张，支持gif、jpg、png格式</div>
+	                                    </div>
+	                                </div>
+	                                <div class="submit-group">
+	                                    <input class="ui-btn-theme uc-btn-lg" type="submit" value="立即发表" />
+	                                </div>
+	                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</block>
+<block name="javas">
+	<script>
+		$('.comment-img').click(function() {
+			var self = $(this);
+			self.parent().siblings().find('.comment-img').attr('src', '__ROOT__/Uploads/CommentLogo/default.png');
+			$(this).attr('src', self.attr('data-src'));
+		});
+	</script>
+</block>

@@ -1,0 +1,220 @@
+<extend name="Common/index" />
+<block name="main">
+    <div class="wrapper uc-router">
+        <ul>
+            <li><a href="">首页</a></li>
+            <li><span class="divider"></span></li>
+            <li><span>个人中心</span></li>
+        </ul>
+    </div>
+
+    <div class="wrapper">
+        <div class="uc-main clearfix">
+            <div class="uc-aside">
+                <div class="uc-menu">
+                    <div class="tit">订单中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/allOrder')}">我的订单</a></li>
+                        <li><a href="{:U('User/favorite')}">我的收藏</a></li>
+                        <li><a href="{:U('History/index')}">浏览历史</a></li>
+                        <li><a href="{:U('Score/index')}">个人积分</a></li>
+                    </ul>
+                    <div class="tit">客户服务</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/comeBackInfo')}">退货中心</a></li>
+                    </ul>
+                    <div class="tit">账户中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('User/userInfo')}">账户信息</a></li>
+                        <li><a href="{:U('User/safe')}">账户安全</a></li>
+                        <li><a href="{:U('Address/index')}">收货地址</a></li>
+                    </ul>
+                    <div class="tit">消息中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/waitEvaluate')}">商品评价</a></li>
+                        <li><a href="{:U('Message/index')}">站内消息</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uc-content">
+                <div class="uc-panel">
+                    <div class="uc-bigtit">个人信息</div>
+                    <div class="uc-panel-bd">
+                        <div class="account-info clearfix">
+                            <form action="" enctype="multipart/form-data" method="post" id="testForm">
+                                <input type="hidden" name="uid" value="{$_GET['id']}">
+                                <div class="col-headpic">
+                                    <div class="pic-wrap">
+                                        <div class="label">头像</div>
+                                        <div class="picbox">
+                                            <img src="__ROOT__/Uploads{$info['user_img']}" style="width:125px" alt="" />
+                                        </div>
+                                        <label>
+                                            <a class="edit">修改头像</a>
+                                            <input type="file" name="user_img" style="display: none">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-userinfo">
+                                    <div class="control-group">
+                                        <div class="hd">用户名：</div>
+                                        <div class="bd"><a class="" >{$userInfo['username']}</a></div>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="hd">昵称：</div>
+                                        <div class="bd"><input class="ui-txtin" type="text" value="{$userInfo['username']}" name="nikname"  /></div>
+                                    </div>
+                                    <empty name="info['real_name']">
+                                        <div class="control-group">
+                                            <div class="hd">真实姓名：</div>
+                                            <div class="bd"><input class="ui-txtin" type="text" value="" name="real_name"  /></div>
+                                        </div>
+                                    </empty>
+                                    <div class="control-group">
+                                        <div class="hd">生日：</div>
+                                        <div class="bd"><input class="ui-txtin" value="{$info['birthday']}" placeholder="请输入2017-01-01这样的格式哦~" type="text" name="birthday" id="birthday" /></div>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="hd">性别：</div>
+                                        <div class="bd">
+                                            <label class="check"><input type="radio" checked value="1" name="sex" />男</label>
+                                            <label class="check ml25"><input type="radio" value="2" name="sex" />女</label>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="hd">所在地：</div>
+                                        <div class="bd">
+                                            <select class="sf" id="sf" name="sf" class="ui-txtin" style="width: 100px;">
+                                                <option value="0">--请选择--</option>
+                                                <foreach name="list" item="v">
+                                                    <option value="{$v['id']}">--{$v['area_name']}--</option>
+                                                </foreach>
+                                            </select>
+                                            <select name="city">
+                                                <option value="">--请选择--</option>
+                                            </select>
+                                            <select name="area">
+                                                <option value="">--请选择--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="hd">详细地址：</div>
+                                        <div class="bd"><input class="ui-txtin" value="{$info['address2']}" type="text" name="address2"  /></div>
+                                    </div>
+                                    
+                                    <div class="control-submit">
+                                        <input class="ui-btn-theme submit" type="submit" value="确认" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="javas">
+<script>
+    // 找到表单
+    var testForm = document.getElementById('testForm');
+
+    
+    // 绑定事件
+    testForm.sf.onchange = function() {
+        console.log('值修改了', this.value);
+        var val = this.value;
+        // 清空下级的选项(城市)
+        testForm.city.length = 1;
+
+        // 拿着ID请求 apache 服务器
+        // 1.新建HTTP请求
+        var xhr = new XMLHttpRequest();
+
+        // 2.建立连接
+        xhr.open('get', "__MODULE__/User/getArea/id/"+val, true);
+
+        // 3.确认发送
+        xhr.send();
+
+        // 4.事件
+        xhr.onreadystatechange = function() {
+
+            // 5. 判断状态
+            if (xhr.readyState == 4 && xhr.status == 200) {
+
+                // 得到数据，这个是JSON字符串
+                // console.log(typeof xhr.responseText, xhr.responseText);
+
+                // 必须是JSON字符串，才可以转换为JS对象
+                var data = JSON.parse(xhr.responseText);
+                // console.log(data);
+
+                // 循环创建元素
+                for (var i = 0; i < data.length; i++) {
+                    // 创建标签
+                    var option = document.createElement('option');
+                    // 设置值
+                    option.value = data[i].id;
+                    // 设置地区名
+                    option.innerHTML = data[i].area_name;
+                    // 添加到节点树
+                    // 找到城市下拉框
+                    testForm.city.appendChild( option );
+                }
+
+            }
+        };
+
+    };
+
+    testForm.city.onchange = function() {
+        console.log('值修改了', this.value);
+        var val = this.value;
+        // 清空下级的选项(城市)
+        testForm.area.length = 1;
+
+        // 拿着ID请求 apache 服务器
+        // 1.新建HTTP请求
+        var xhr = new XMLHttpRequest();
+
+        // 2.建立连接
+        xhr.open('get', "__MODULE__/User/getArea/id/"+val, true);
+
+        // 3.确认发送
+        xhr.send();
+
+        // 4.事件
+        xhr.onreadystatechange = function() {
+
+            // 5. 判断状态
+            if (xhr.readyState == 4 && xhr.status == 200) {
+
+                // 得到数据，这个是JSON字符串
+                // console.log(typeof xhr.responseText, xhr.responseText);
+
+                // 必须是JSON字符串，才可以转换为JS对象
+                var data = JSON.parse(xhr.responseText);
+                // console.log(data);
+
+                // 循环创建元素
+                for (var i = 0; i < data.length; i++) {
+                    // 创建标签
+                    var option = document.createElement('option');
+                    // 设置值
+                    option.value = data[i].id;
+                    // 设置地区名
+                    option.innerHTML = data[i].area_name;
+                    // 添加到节点树
+                    // 找到城市下拉框
+                    testForm.area.appendChild( option );
+                }
+
+            }
+        };
+
+    };
+    </script>
+</block>

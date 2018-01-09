@@ -1,0 +1,87 @@
+<extend name="Common/index" />
+<block name="main">
+    <div class="wrapper uc-router">
+        <ul>
+            <li><a href="">首页</a></li>
+            <li><span class="divider"></span></li>
+            <li><span>个人中心</span></li>
+        </ul>
+    </div>
+
+    <div class="wrapper">
+        <div class="uc-main clearfix">
+            <div class="uc-aside">
+                <div class="uc-menu">
+                    <div class="tit">订单中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/allOrder')}">我的订单</a></li>
+                        <li><a href="{:U('User/favorite')}">我的收藏</a></li>
+                        <li><a href="{:U('History/index')}">浏览历史</a></li>
+                        <li><a href="{:U('Score/index')}">个人积分</a></li>
+                    </ul>
+                    <div class="tit">客户服务</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/comeBackInfo')}">退货中心</a></li>
+                    </ul>
+                    <div class="tit">账户中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('User/userInfo')}">账户信息</a></li>
+                        <li><a href="{:U('User/safe')}">账户安全</a></li>
+                        <li><a href="{:U('Address/index')}">收货地址</a></li>
+                    </ul>
+                    <div class="tit">消息中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/waitEvaluate')}">商品评价</a></li>
+                        <li><a href="{:U('Message/index')}">站内消息</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uc-content">
+                <div class="uc-panel">
+                    <div class="uc-bigtit">退款</div>
+                    <div class="uc-panel-bd">
+                        <div class="uc-sort">
+                            <div class="uc-tabs">
+                                <a class="item" href="">退货申请</a>
+                            </div>
+                            <div class="uc-search">
+                            </div>
+                        </div>
+                        <table class="refund-returns-list">
+                            <tr class="head bd-t">
+                                <td width="370" class="first">商品信息</td>
+                                <td>退款金额（元）</td>
+                                <td>审核状态</td>
+                                <td width="140">操作</td>
+                            </tr>
+                            <foreach name="dataInfo" item="v" >
+                                <tr class="item-head">
+                                    <td colspan="5">
+                                        <div class="fl">
+                                            退款编号: {$v['id']} <span class="ml15">
+                                        </div>
+                                        <div class="fr">申请时间：{$v['addtime']}   </div>
+                                    </td>
+                                </tr>
+                                <tr class="item">
+                                    <td class="first">
+                                        <div class="good-desc">
+                                            <img class="gimg" src="__ROOT__/Uploads{$v['colorpic']}" alt="" />
+                                            <div class="ginfo">
+                                                {$v['gname']}<br />订单编号：{$v['oid']}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="text-danger">{$v['money']}元</span></td>
+                                    <td>{$v['status']}</td>
+                                    <td class="last"></td>
+                                </tr>
+                                <tr class="blank"></tr>
+                            </foreach>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

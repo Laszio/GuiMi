@@ -1,0 +1,137 @@
+<extend name="Common/index" />
+<block name="main">
+    <div class="wrapper uc-router">
+        <ul>
+            <li><a href="">首页</a></li>
+            <li><span class="divider"></span></li>
+            <li><span>个人中心</span></li>
+        </ul>
+    </div>
+
+    <div class="wrapper">
+        <div class="uc-main clearfix">
+            <div class="uc-aside">
+                <div class="uc-menu">
+                    <div class="tit">订单中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/allOrder')}">我的订单</a></li>
+                        <li><a href="{:U('User/favorite')}">我的收藏</a></li>
+                        <li><a href="{:U('History/index')}">浏览历史</a></li>
+                        <li><a href="{:U('Score/index')}">个人积分</a></li>
+                    </ul>
+                    <div class="tit">客户服务</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/comeBackInfo')}">退货中心</a></li>
+                    </ul>
+                    <div class="tit">账户中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('User/userInfo')}">账户信息</a></li>
+                        <li><a href="{:U('User/safe')}">账户安全</a></li>
+                        <li><a href="{:U('Address/index')}">收货地址</a></li>
+                    </ul>
+                    <div class="tit">消息中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/waitEvaluate')}">商品评价</a></li>
+                        <li><a href="{:U('Message/index')}">站内消息</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uc-content">
+                <div class="uc-panel">
+                    <div class="uc-bigtit">个人积分</div>
+                    <div style="border:1px solid red;height:100px;">
+                        <span style="position:relative;left:13px;top:24px;font-size: 18px;color:red">我的积分</span>
+                        <span style="position:relative;left:24px;top:24px;font-size: 16px;color:black"><span class="score">{$score['score']}</span>{$score['vip_img']}</span>
+                        <a>
+                            <if condition="$score['today_qd'] eq 1">
+                                <img qd='1' id="qiandao" style="width:50px;height:50px;position: relative;left:117px;top:20px;" src="__ROOT__/Uploads/qiandao/qiandao_after.png" alt="">
+                            <else />
+                                <img id="qiandao" style="width:50px;height:50px;position: relative;left:117px;top:20px;" src="__ROOT__/Uploads/qiandao/qiandao_before.png" alt="">
+                            </if>
+                        </a>
+
+                        <if condition="$score['today_qd'] eq 1">
+                            <div class="success" style="display: inline-block;position:relative;left:122px;top:28px;">
+                            <span style="font-size:16px;color:red;">今日签到成功</span>            
+                            </div>
+                        <else />
+                            <div class="success" style="display: inline-block;">
+                                <span style="position:relative;left:127px;top:14px;font-size: 18px;color:red">+10</span>
+                                <span style="position:relative;left:91px;top:37px;font-size: 16px;color:black">每日签到</span>                
+                            </div>
+                        </if>
+                        <a href=""><img style="width:50px;height:50px;position: relative;left:180px;top:20px;" src="__ROOT__/Uploads/qiandao/jifen.png" alt="">
+                        <span style="position:relative;left:195px;top:25px;font-size: 16px;color:black">积分商城</span></a>
+                    </div>
+                    <div class="uc-panel-bd" style="margin-top: 20px;">
+                        <div style="border: 1px solid red;height:300px;">
+                            <p style="font-size: 18px;color:red;margin-left: 13px;">积分规则</p>
+                            <p style="margin-left: 92px;font-size: 16px;">每日签到加10积分</p>
+                            <p style="margin-left: 92px;font-size: 16px;">成功下一次单加100积分</p>
+                            <p style="margin-left: 92px;font-size: 16px;">完成一次商品评论加100积分</p>
+                            <div style="height:200px;position:relative;top:10px;">
+                                <p style="font-size: 18px;color:red;margin-left: 13px;">等级规则</p>
+                                <p style="margin-left: 92px;font-size: 16px;">0~200积分为普通用户<span><img style="width:20px;height:20px;" src="__ROOT__/Uploads/qiandao/VIP-1.png" alt=""></span></p>
+                                <p style="margin-left: 92px;font-size: 16px;">200~500为铂金用户<span><img style="width:20px;height:20px;" src="__ROOT__/Uploads/qiandao/VIP-2.png" alt=""></span></p>
+                                <p style="margin-left: 92px;font-size: 16px;">大于500积分为砖石用户<span><img style="width:20px;height:20px;" src="__ROOT__/Uploads/qiandao/VIP-3.png" alt=""></span></p>
+                            </div>
+                        </div>
+
+                        <div class="pages">
+                            <a class="page prev" href="">上一页</a>
+                            <a class="page" href="">1</a>
+                            <span class="cur-page">2</span>
+                            <a class="page" href="">3</a>
+                            <a class="page" href="">4</a>
+                            <i class="page-split">...</i>
+                            <a class="page" href="">71</a>
+                            <a class="page next" href="">下一页</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                
+        </div>
+    </div>
+</block>
+
+<block name="javas">
+    <script>
+        $('body').delegate('#qiandao', 'click', function() {
+            var img = $(this);
+            if (img.attr('qd') != 1) {
+                $.ajax({
+                    url: '__URL__/ajaxSetInc',
+                    type: 'get',
+                    async: true,
+                    success: function(res) {
+                        console.log(123);
+                        if (res.status==1) {
+                            img.attr('src', '__ROOT__/Uploads/qiandao/qiandao_after.png');
+                            $('.success').html('<span style="font-size:16px;color:red;">今日签到成功</span>').css({'position':'relative', 'left':'122px', 'top':'28px'});
+                            $('.score').html(res.score);
+
+                            var timer = setInterval(function() {
+                                $.ajax({
+                                    url: '__URL__/ajaxSaveSta',
+                                    type: 'get',
+                                    async: true,
+                                    success: function(res) {
+                                        $('.success').html('<span style="position:relative;left:5px;top:-14px;font-size: 18px;color:red">+10</span><span style="position:relative;left:-27px;top:9px;font-size: 16px;color:black">每日签到</span> ').css({'display': 'inline-block'});
+                                        $('#qiandao').attr('src', '__ROOT__/Uploads/qiandao/qiandao_before.png').css({
+                                            "width":"50px","height":"50px","position": "relative","left":"117px","top":"20px"
+                                        });
+                                        clearInterval(timer);
+                                    }
+                                });
+                            }, 1000*10);
+                        }
+                    }
+                });
+                
+            }
+        });
+    </script>
+</block>

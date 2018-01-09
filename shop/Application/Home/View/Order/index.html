@@ -1,0 +1,164 @@
+<extend name="Common/index" />
+<block name="nav"></block>
+<block name="main">
+        <div class="cart-header wrapper">
+            <div class="logo">
+                <a href="index.html"><img src="img/logo.png" alt="logo" /></a>
+            </div>
+            <div class="step-box">
+                <div class="row">
+                    <div class="step first active col-3">
+                        <span class="num">1</span><span class="line"></span><span class="label">我的购物车</span>
+                    </div>
+                    <div class="step active col-3">
+                        <span class="num">2</span><span class="line"></span><span class="label">确认订单信息</span>
+                    </div>
+                    <div class="step col-3">
+                        <span class="num">3</span><span class="line"></span><span class="label">选择支付方式</span>
+                    </div>
+                    <div class="step last col-3">
+                        <span class="num">4</span><span class="line"></span><span class="label">完成付款</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--头部-->
+<form action="{:U('Order/pay')}" method="post">
+    <div class="wrapper confirm-wrap">
+        <div class="confirm-tit">
+            <span class="tit">选择收货地址 :</span>
+        </div>
+        <div class="confirm-address clearfix">
+            <foreach name="addressList" item="v">
+                <label>
+                    <div class="col col-4" >
+                        <div class="item {$v['state'] == 2 ? 'active': ''}" >
+                            <input type="radio" {$v['state'] == 2 ? 'checked': ''} style="display: none;" name="aid" value="{$v['id']}">
+                            <div class="action"  val='{$v["id"]}'>
+
+                                {$v['state'] == 2 ? '': "<a class='setdft lz-default' href='javascript:;'>设为默认</a>"}
+                            </div>
+                            <div class="info">
+                                <div class="ellipsis"><img src="img/ico/user.jpg" alt="" />{$v['area']}（{$v['name']} 收）</div>
+                                <div class="ellipsis"><img src="img/ico/dizhi.jpg" alt="" />{$v['address']}</div>
+                                <div class="ellipsis"><img src="img/ico/tel.jpg" alt="" />{$v['phone']}</div>
+                            </div>
+                        </div>
+                    </div>
+                </label>
+            </foreach>
+            <div class="col col-4">
+                <a class="item va-m-box ta-c add" href="{:U('Address/index')}">
+                    <div class="add-new">
+                        <span class="ico"><i class="iconfont icon-tianjia"></i></span>
+                        <div class="label">添加收货地址</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="confirm-address-bar"  style="display: none;">
+            <a href="javascript:;" class="drop" data-action="drop">显示全部地址</a>
+        </div>
+    
+
+        <div class="confirm-tit">
+           <span class="tit">确认商品信息:</span><div class="right"><a class="back" href="{:U('Cart/index')}">返回购物车></a></div>
+        </div>
+        <!-- 订单信息 -->
+        <?php $i = 0; ?>
+        <foreach name="goodsList" item="goods">
+        <input type="hidden" value="{$goods['propid']}" name="goods[{$i}][propid]">
+        <input type="hidden" value="{$goods['gid']}" name="goods[{$i}][gid]">
+        <input type="hidden" value="{$goods['size']}" name="goods[{$i}][size]">
+        <input type="hidden" value="{$goods['color']}" name="goods[{$i}][color]">
+        <input type="hidden" value="{$goods['num']}" name="goods[{$i}][num]">
+        <input type="hidden" value="{$goods['colorpic']}" name="goods[{$i}][colorpic]">
+        <div class="confirm-goods">
+            <div class="confirm-goods-hd clearfix">
+                <div class="col col1">商品简介：</div>
+                <div class="col col2">单价（元）</div>
+                <div class="col col3">数量</div>
+                <div class="col col4">小计（元）</div>
+            </div>
+            <div class="confirm-goods-bd">
+                <div class="goods clearfix">
+                    <div class="col col1">
+                        <img src="__ROOT__/Uploads{:$goods['colorpic']}" alt="">
+                        <div class="info">
+                            <div class="name">{$goods['gname']}</div>
+                            <div class="meta"><span>{$goods['color']}　</span> <span>　{$goods['size']}</span></div>
+                        </div>
+                    </div>
+                    <div class="col col2">￥{$goods['price']*$goods['discount']/100}</div>
+                    <div class="col col3">{$goods['num']}</div>
+                    <div class="col col4">￥{$goods['price']*$goods['discount']*$goods['num']/100}</div>
+                </div>
+            </div>
+            <div class="confirm-goods-ft clearfix">
+            </div>
+        </div>
+        <?php $i++; ?>
+        </foreach>
+         <div class="confirm-total">
+            <div class="fl"><span class="vm-ib">买家留言： </span><textarea class="ui-txtin" style="width: 410px;height: 100px" name="text" placeholder="在此输入给商家的留言"></textarea></div>
+            <div class="box">
+                <div class="item">应付总额：<strong> ¥ {:$allTotalPrice}</strong></div>
+                <button class="ui-btn-theme go-charge" href="{:U('Order/pay')}">去结算</button>
+            </div>
+        </div>
+    </div>
+
+</block>
+</form>
+<block name="javas" >
+<link rel="stylesheet" href="__PUBLIC__/Home/js/icheck/style.css"/>
+<script src="__PUBLIC__/Home/js/icheck/icheck.min.js"></script>
+<script src="__PUBLIC__/Home/js/layer/layer.js"></script>
+<script src="__PUBLIC__/Home/js/global.js"></script>
+<script>
+//这里不使用自带按钮，因为设计按钮较特殊，不准备作为通用样式
+$('input:radio').change(function() {
+    console.log(this);
+    $('input:radio').parent().removeClass("active");
+    $(this).parent().addClass('active');
+});
+
+$('.lz-default').click(function() {
+    var val = $(this).parent().attr('val');
+    $.ajax({
+        url:"{:U('Address/setDefault')}",
+        data:'id='+val,
+        type:'get',
+        success:function (res) {
+            console.log(res);
+            if (res !== 0) {
+                window.location.reload();
+            }
+        }
+    });
+});
+
+//
+function juggeAddressNum () {
+    var col=$('.confirm-address .col'),
+    cH=col.height();
+    $('.confirm-address').height(cH)
+    if (col.length>3) {
+        $('.confirm-address-bar').show();
+    }
+    else {
+        $('.confirm-address-bar').hide();
+    }
+}
+juggeAddressNum();
+zAction.add({
+    'drop':function () {
+        $('.confirm-address').height('auto')
+        var h=$('.confirm-address').height()
+        juggeAddressNum();
+        $('.confirm-address').animate({height: h}, 300);
+        $(this).parent().remove();
+    }
+});
+</script>
+</block>

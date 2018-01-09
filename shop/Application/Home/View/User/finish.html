@@ -1,0 +1,94 @@
+<extend name="Common/index" />
+<block name="main">
+    <div class="wrapper uc-router">
+        <ul>
+            <li><a href="">首页</a></li>
+            <li><span class="divider"></span></li>
+            <li><span>个人中心</span></li>
+        </ul>
+    </div>
+
+    <div class="wrapper">
+        <div class="uc-main clearfix">
+            <div class="uc-aside">
+                <div class="uc-menu">
+                    <div class="tit">订单中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/allOrder')}">我的订单</a></li>
+                        <li><a href="{:U('User/favorite')}">我的收藏</a></li>
+                        <li><a href="{:U('History/index')}">浏览历史</a></li>
+                        <li><a href="{:U('Score/index')}">个人积分</a></li>
+                    </ul>
+                    <div class="tit">客户服务</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/comeBackInfo')}">退货中心</a></li>
+                    </ul>
+                    <div class="tit">账户中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('User/userInfo')}">账户信息</a></li>
+                        <li><a href="{:U('User/safe')}">账户安全</a></li>
+                        <li><a href="{:U('Address/index')}">收货地址</a></li>
+                    </ul>
+                    <div class="tit">消息中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/waitEvaluate')}">商品评价</a></li>
+                        <li><a href="{:U('Message/index')}">站内消息</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uc-content">
+                <div class="uc-panel">
+                    <div class="uc-bigtit bd-b">账号安全</div>
+                    <div class="uc-panel-bd">
+
+                        <div class="verify-step mt20">
+                            <div class="item item-f">
+                                <i></i>1.验证身份
+                            </div>
+                            <div class="item item-m">
+                                <i></i>2.设置新密码
+                            </div>
+                            <div class="item item-l active">
+                                3.完成
+                            </div>
+                        </div>
+
+                        <div class="verify-panel mt10">
+                            <div class="notice">
+                                <div class="notice-inner">
+                                    <i class="ico iconfont icon-check01"></i>
+                                    新密码设置成功！<br />
+                                    请牢记您新设置的密码 <a class="text-info ml10" href="">返回登录</a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="javas" >
+<script>
+window.onload = function() {
+    $.ajax({
+        url:"{:U('User/userLogout')}",
+        post:'get',
+        success:function(res){
+            console.log(res);
+            if(res == 1) {
+                setTimeout(function(){
+                window.location.href = "{:U('Login/index')}";
+                    
+                }, 200)
+            }
+        }
+    })
+}
+                    // setTimeout(function () {
+                    //     window.location.href = "{:U('Admin/addAdmin')}";
+                    // },1000)
+</script>
+</block>

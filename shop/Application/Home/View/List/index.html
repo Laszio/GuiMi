@@ -1,0 +1,362 @@
+<extend name="Common/index" />
+<block name="title">商品列表页</block>
+<block name="link">
+    <link rel="stylesheet" href="__PUBLIC__/Home/css/search-goods.css">
+</block>
+<block name="main">
+    <div class="wrapper router">
+        <ul class="router-nav" style="position:relative;">
+            <li><a href="">首页</a></li>
+            <li><span class="divider"></span></li>
+            <?php if (isset($typeName)) { ?>
+                <li><span style="border:1px solid pink;padding:5px 20px;color:gray;">{$typeName}</span></li>
+            <?php } else if (isset($_GET['marke'])) {?>
+                <?php if (isset($corrected)) { ?>
+                    <li><span style="border:1px solid pink;padding:5px 20px;color:gray;"><?php foreach ($corrected as $v) {
+                        echo $v.' ';
+                    }?></span></li>
+                <?php } else if (isset($searchName)) {?>
+                     <li><span style="border:1px solid pink;padding:5px 20px;color:gray;"><?php foreach ($searchName as $v) {
+                        echo $v.' ';
+                    }?></span></li>
+                <?php } else {?>
+                    <li><span style="border:1px solid pink;padding:5px 20px;color:gray;"><?=str_replace('+', ' ', $_GET['marke'])?></span></li>
+                <?php }?>
+            <?php } else if (isset($_GET['brandMarke'])) {?>
+                <li id="jin-search"><span style="border:1px solid pink;padding:5px 20px;color:gray;">品牌：<?=$brand[0]['brand_name']?></span></li>
+                <div style="display:none;position: absolute;top:38px;left:48px;width:400px;z-index:10;border:2px solid pink;"></div>
+            <?php }?>
+            <if condition="isset($_GET['bid'])">
+                <li>>&nbsp;<a href="{:U('index', ['tid'=>I('get.tid'),'price'=>I('get.price'), 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke')])}"><span title="<?=$brandName?>" style="border:1px dashed red;padding:5px 20px;color:red;">品牌:{$brandName}<span style="font-weight: bold;position: relative;left:5px;">x</span></span></a></li>
+            </if>
+            <if condition="isset($_GET['price'])">
+                <li>>&nbsp;<a href="{:U('index', ['tid'=>I('get.tid'),'bid'=>I('get.bid'), 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}"><span title="{:I('get.price')}" style="border:1px dashed red;padding:5px 20px;color:red;">价格:{:I('get.price')}<span style="font-weight: bold;position: relative;left:5px;">x</span></span></a></li>
+            </if>
+            
+            <if condition="isset($_GET['season'])">
+                <li>>&nbsp;<a href="{:U('index', ['tid'=>I('get.tid'),'bid'=>I('get.bid'), 'price'=>I('get.price'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}"><span title="{:I('get.season')}" style="border:1px dashed red;padding:5px 20px;color:red;">季节:{:I('get.season')}<span style="font-weight: bold;position: relative;left:5px;">x</span></span></a></li>
+            </if>
+             <if condition="isset($_GET['color'])">
+                <li>>&nbsp;<a href="{:U('index', ['tid'=>I('get.tid'),'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>I('get.season'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}"><span title="{:I('get.color')}" style="border:1px dashed red;padding:5px 20px;color:red;">颜色:{:I('get.color')}<span style="font-weight: bold;position: relative;left:5px;">x</span></span></a></li>
+            </if>
+            <if condition="isset($_GET['style'])">
+                <li>>&nbsp;<a href="{:U('index', ['tid'=>I('get.tid'),'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>I('get.season'), 'color'=>I('get.color'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}"><span title="{:I('get.style')}" style="border:1px dashed red;padding:5px 20px;color:red;">风格:{:I('get.style')}<span style="font-weight: bold;position: relative;left:5px;">x</span></span></a></li>
+            </if>
+            <if condition="isset($_GET['size'])">
+                <li>>&nbsp;<a href="{:U('index', ['tid'=>I('get.tid'),'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}"><span title="{:I('get.size')}" style="border:1px dashed red;padding:5px 20px;color:red;">码数:{:I('get.size')}<span style="font-weight: bold;position: relative;left:5px;">x</span></span></a></li>
+            </if>
+        </ul>
+        <div class="sch-result">
+            <span class="tag"></span><span class="fl">共<span class="num">{:count($list)}</span>个相关商品</span>
+        </div>
+    </div>
+
+    <?php if (isset($corrected)) {?>
+        <div style="background-color: lightyellow;border: 2px solid pink" class="wrapper router">
+            <h3 style="position: relative;top:-16px;left:10px;">我们为您显示“<span style="color:green">
+                <?php foreach ($corrected as $v) {
+                    echo $v.' ';
+                }?>
+            </span>”相关的商品。仍然搜索：“<a><?=str_replace('+', ' ', $_GET['marke'])?></a>”</h3>
+        </div>
+    <?php } else if (isset($searchName)) {?>
+        <div style="background-color: lightyellow;border: 2px solid pink" class="wrapper router">
+            <h3 style="position: relative;top:-16px;left:10px;">我们为您显示“<span style="color:green">
+                <?php foreach ($searchName as $v) {
+                    echo $v.' ';
+                }?>
+            </span>”相关的商品。仍然搜索：“<a><?=str_replace('+', ' ', $_GET['marke'])?></a>”</h3>
+        </div>
+    <?php }?>
+    
+    <div class="filter-box">
+        <div class="wrapper">
+            <?php if (!isset($_GET['bid']) && !isset($_GET['brandMarke'])) {?>
+            <div class="sch-prop sch-brand" style="border:2px solid pink;">
+
+                <!-- 品牌定位 -->
+                <empty name="brand">
+                <else />
+                    <div class="sch-key">品牌：</div>
+                    <div class="sch-value clearfix">
+
+
+                        <foreach name="brand" item="v">
+                            <div class="item">
+                                <a href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>$v['id'], 'price'=>I('get.price'), 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke')])}" class="inner jin_brand">
+                                    <img src="__ROOT__/Uploads/{$v['logo']}" alt="" />
+                                    <div class="name">{$v['brand_name']}</div>
+                                </a>
+                            </div>
+                        </foreach>
+                        
+                    </div>
+                </empty>
+                <!-- 定位结束 -->
+            </div>
+            <?php }?>
+                    
+            <div class="sch-prop clearfix">
+                <div class="sch-key">价格：</div>
+                <div class="sch-value clearfix">
+                    <a href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>'100-200', 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">100-200</a>
+                    <a href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>'200-300', 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">200-300</a>
+                    <a href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>'300-400', 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">300-400</a>
+                    <a href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>'500-600', 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">500-600</a>
+                    <a href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>'700-800', 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">700-800</a>
+                    <a href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>'大于800', 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">800以上</a>
+                </div>
+            </div>
+            <div class="sch-prop clearfix">
+                <div class="sch-key">季节：</div>
+                <div class="sch-value clearfix">
+                    <a href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>'2017冬季', 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">2017冬季 </a>
+                    <a href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>'2017秋季', 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">2017秋季 </a>
+                    <a href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>'2017夏季', 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">2017夏季 </a>
+                    <a href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>'2017春季', 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">2017春季 </a>
+                </div>
+            </div>
+
+            <?php if (empty($_GET['color'])) {?>
+                <div class="sch-prop clearfix">
+                    <div class="sch-key">颜色：</div>
+                    <div class="sch-value clearfix">
+                    <foreach name="color" item="v">
+                        <a href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>I('get.season'), 'color'=>$v, 'style'=>I('get.style'), 'size'=>I('get.size'),'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">{$v}</a>
+                    </foreach>
+                       
+                    </div>
+                </div>
+            <?php }?>
+
+            <?php if (empty($_GET['style'])) {?>
+                <div class="sch-prop clearfix">
+                    <div class="sch-key">风格：</div>
+                    <div class="sch-value clearfix">
+                        <foreach name="style" item="v">
+                        <a href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>$v, 'size'=>I('get.size'),'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">{$v}</a>
+                        </foreach>
+                    </div>
+                </div>
+            <?php }?>
+
+            <?php if (empty($_GET['size'])) {?>
+                <div class="sch-prop clearfix">
+                    <div class="sch-key">码数：</div>
+                    <div class="sch-value clearfix">
+                        <foreach name="size" item="v">
+                            <a href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>$v, 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">{$v}</a>
+                        </foreach>
+                    </div>
+                </div>
+            <?php }?>
+        </div>
+    </div>
+
+    <div class="sg-main wrapper">
+        <div class="sg-content">
+            <div class="rank-menu">
+                <div class="rank">
+                    <div class="r-item">
+                        <if condition="isset($_GET['buynumdown'])" >
+                            <a class="active" title="点击恢复默认排序" href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'),'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">销量<span class="sort-arrow desc"></a>
+                        <else />
+                            <a title="点击按销量从高到低排序" href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'buynumdown'=>'buynumdown', 'brandMarke'=>I('get.brandMarke')])}">销量<span class="sort-arrow desc"></a>
+                            
+                        </if>
+                    </div>
+                    <div class="r-item">
+                        <if condition="isset($_GET['pricedown'])" >
+                            <a class="active" title="点击恢复默认排序" href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">价格<span class="sort-arrow desc"></a>
+                        <else />
+                            <a title="点击按价格从高到低排序" href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'pricedown'=>'pricedown', 'brandMarke'=>I('get.brandMarke')])}">价格<span class="sort-arrow desc"></a>
+                            
+                        </if>
+                    </div>
+                    <div class="r-item">
+                        <if condition="isset($_GET['clickdown'])" >
+                            <a class="active" title="点击恢复默认排序" href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">人气<span class="sort-arrow desc"></a>
+                        <else />
+                            <a title="点击按人气从高到低排序" href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'clickdown'=>'clickdown', 'brandMarke'=>I('get.brandMarke')])}">人气<span class="sort-arrow desc"></a>
+                            
+                        </if>
+                    </div>
+                    <div class="r-item">
+                        <if condition="isset($_GET['timedown'])" >
+                            <a class="active" title="点击恢复默认排序" href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'brandMarke'=>I('get.brandMarke')])}">上架时间<span class="sort-arrow desc"></a>
+                        <else />
+                            <a title="点击按时间从高到低排序" href="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'price'=>I('get.price'), 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'size'=>I('get.size'), 'marke'=>I('get.marke'), 'timedown'=>'timedown', 'brandMarke'=>I('get.brandMarke')])}">上架时间<span class="sort-arrow desc"></a>
+                            
+                        </if>
+                    </div>
+                    <if condition="isset($_GET['price'])">
+                    <else />
+                        <div class="r-item">
+                            <form id="priceForm" action="{:U('index', ['tid'=>I('get.tid'), 'bid'=>I('get.bid'), 'season'=>I('get.season'), 'color'=>I('get.color'), 'style'=>I('get.style'), 'marke'=>I('get.marke'), 'size'=>I('get.size'), 'brandMarke'=>I('get.brandMarke')])}" method="get">
+                                <div class="sch">
+                                    <input value="{:I('get.pricemin')}" name="pricemin" type="text" class="txtin" placeholder="￥" /><span class="divider">-</span><input value="{:I('get.pricemax')}" name="pricemax" type="text" placeholder="￥" class="txtin" /><button class="tj ui-btn-theme">确定</button>
+                                </div>
+                            </form>
+                        </div>
+                    </if>
+                </div>
+                <div class="help">
+                    <label class="check"><input type="checkbox" name="" id="" />仅显示有货商品</label>
+                    <span class="info">共<span>{:count($list)}个</span>商品</span>
+                    <!-- <div class="r-page">
+                        <a class="prev" href="">上一页</a><a class="next" href="">下一页</a>
+                    </div> -->
+                </div>
+            </div>
+            <div class="sg-list clearfix" id="ajin">
+                
+                
+                <!-- 定位 -->
+                <foreach name="list" item="v">
+                    <div class="col col-3">
+                        <div class="item">
+                            <div class="inner jin-lazyload">
+                                <a href="{:U('Goods/index', ['id'=>$v['id']])}"><img class="figure" src="__PUBLIC__/Home/lazygif/lazy3.gif" data-echo="__ROOT__/Uploads/{$v['pic1']}" alt="" /></a>
+                                <a href=""><div class="name">{$v['gname']}</div><div class="price">￥{$v['price']}</div></a>
+
+                                <a class="act" href=""><i class="iconfont icon-cart"></i>加入购物车</a>
+                            </div>
+                        </div>
+                    </div>
+                </foreach>
+                <!-- 定位结束 -->
+
+            </div>
+
+            <!-- 分页按钮 -->
+            <div class="jin-page">
+                {$btn}
+            </div>
+            
+        </div>
+
+
+        <div class="sg-aside">
+            <div class="sg-aside-tit">
+                商品热销
+            </div>
+            <empty name="host">
+            <else />
+                <foreach name="host" item="v">
+                    <div class="shop-hot">
+                        <div class="item">
+                            <a href=""><img class="figure" src="__PUBLIC__/Home/lazygif/lazy3.gif" data-echo="__ROOT__/Uploads/{$v['pic1']}" alt="" /></a>
+                            <div class="p-name"><a href="">{$v['gname']}</a></div>
+                            <div class="price">¥{$v['price']}</div>
+                        </div>   
+                    </div>
+                </foreach>
+            </empty>
+        </div>
+    </div>  
+</block>
+
+
+<block name="javas">
+<script src="__PUBLIC__/Home/js/echo.js"></script>
+<!-- jin的脚本 -->
+<script>
+    //懒加载
+    Echo.init({
+        offset: 100, //距离可视区域100像素提前加载
+        throttle: 1000   //延迟多少毫秒加载
+    });
+
+    $('.jin-page a, .jin-page span').unwrap('<div></div>').wrap('<li></li>').parent().parent().wrapInner('<ul class="pagination"></ul>');
+    $('.jin-page').find('.current').css({'color':'white', 'backgroundColor':'red'});
+    
+    //品牌的hover事件
+    var timer = null;
+    $('#jin-search').mouseover(function() {
+        clearTimeout(timer);
+        $(this).next().css('display', 'block');
+
+        //缓存有。拿缓存。没有就发送ajax
+        if ($('#jin-search').next().attr('cache')) {
+             $('#jin-search').next().html($('#jin-search').next().attr('cache'));
+        } else {
+            $.ajax({
+                url: '__URL__/ajaxFindBrand',
+                type: 'get',
+                async: true,
+                success: function(res) {
+                    var div = '';
+                    for (var k in res) {
+                        div += '<a href="__URL__/index/brandMarke/'+res[k].id+'.html"><li style="float:left;margin:0;padding:0;"><img style="width:100px;heihgt:50px;" src="__ROOT__/Uploads/'+res[k].logo+'"></li></a>';
+                    }
+                    $('#jin-search').next().html(div);
+                    //存进一个属性的缓存
+                    $('#jin-search').next().attr('cache', div);
+                }
+            });        
+        }
+    });
+
+    //设置一下缓存时间10秒；
+    setInterval(function() {
+        $('#jin-search').next().attr('cache', '');
+    }, 10000);
+
+    $("#jin-search").mouseout(function() {
+        timer = setInterval(function() {
+            $("#jin-search").next().css('display', 'none');
+        }, 100);
+    });
+    $('#jin-search').next().mouseover(function() {
+        clearTimeout(timer);
+        $(this).css('display', 'block');
+
+    });
+    $('#jin-search').next().mouseout(function() {
+        clearTimeout(timer);
+        $(this).css('display', 'none');
+
+    });
+
+</script>
+
+
+<script>
+    
++function () {
+    var dftLine=5,
+    dftH=50; //这里品牌的比普通的一行要高，所以用品牌的做标准行高
+    //
+    $('.filter-box .sch-value').each(function(index, el) {
+        var h=$(this).height();
+        if (h>dftH) {
+            $('<a class="prop-toggle"  data-action="prop-toggle" href="javascript:;">查看更多<i></i></a>').insertAfter($(this));
+            $(this).addClass('slideup');
+        }
+        console.log(123);
+    });
+    $('.filter-box .sch-prop').each(function(index, el) {
+        index+=1;
+        if (index==dftLine) {
+            $('.filter-box').append('<span class="filter-toggle" data-action="filter-toggle"><span class="tohide">收起<i></i></span><span class="toshow">更多<i></i></span></span>');
+        }
+        if (index>dftLine) {
+            $(this).addClass('hide');
+        }
+
+    });
+    zAction.add({
+        'filter-toggle':function () {
+            $(this).toggleClass('on').parent().toggleClass('on');
+        },
+        'prop-toggle':function () {
+            $(this).toggleClass('on').prev('.sch-value').toggleClass('slideup')
+        }
+    });
+
+}();
+
+
+
+</script>
+</block>

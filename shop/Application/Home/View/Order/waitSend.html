@@ -1,0 +1,112 @@
+<extend name="Common/index" />
+<block name="main" >
+    <div class="wrapper uc-router">
+        <ul>
+            <li><a href="">首页</a></li>
+            <li><span class="divider"></span></li>
+            <li><span>个人中心</span></li>
+        </ul>
+    </div>
+
+    <div class="wrapper">
+        <div class="uc-main clearfix">
+            <div class="uc-aside">
+                <div class="uc-menu">
+                    <div class="tit">订单中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/allOrder')}">我的订单</a></li>
+                        <li><a href="{:U('User/favorite')}">我的收藏</a></li>
+                        <li><a href="{:U('History/index')}">浏览历史</a></li>
+                        <li><a href="{:U('Score/index')}">个人积分</a></li>
+                    </ul>
+                    <div class="tit">客户服务</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/comeBackInfo')}">退货中心</a></li>
+                    </ul>
+                    <div class="tit">账户中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('User/userInfo')}">账户信息</a></li>
+                        <li><a href="{:U('User/safe')}">账户安全</a></li>
+                        <li><a href="{:U('Address/index')}">收货地址</a></li>
+                    </ul>
+                    <div class="tit">消息中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/waitEvaluate')}">商品评价</a></li>
+                        <li><a href="{:U('Message/index')}">站内消息</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uc-content">
+                <div class="uc-panel">
+                    <div class="uc-bigtit">我的订单</div>
+                    <div class="uc-panel-bd">
+                        <div class="uc-sort">
+                            <div class="uc-tabs">
+                                <a class="item " href="{:U('Order/allOrder')}">所有订单（{$waitOrderNum0}）</a>
+                                <a class="item " href="{:U('Order/waitPay')}">代付款（{$waitOrderNum1}）</a>
+                                <a class="item active" href="{:U('Order/waitSend')}">待发货（{$waitOrderNum2}）</a>
+                                <a class="item " href="{:U('Order/waitGet')}">待收货（{$waitOrderNum3}）</a>
+                                <a class="item" href="{:U('Order/waitEvaluate')}">待评价（{$waitOrderNum4}）</a>
+                            </div>
+                            <div class="uc-search">
+                                
+                            </div>
+                        </div>
+                        <table class="uc-table">
+                            <thead>
+                                <td></th>
+                                <th></th>
+                                <th></th>
+                                <th width="120"></th>
+                            </thead>
+                            <foreach name="waitInfo" item="v">
+                                <tr class="hd order-meta">
+                                    <td colspan="4">
+                                        <div class="left">{$v['addtime']}   订单号: {$v['id']} </div>
+                                    </td>
+                                </tr>
+                                <tr class="order-goods">
+                                    <td>
+                                        <foreach name="v['goodsInfo']" item="val">
+                                            <div class="goods-info">
+                                                <img class="figure" src="__ROOT__/Uploads{$val['colorpic']}" alt="" />
+                                                <div class="info">
+                                                    <div>
+                                            <if condition="$val['status'] eq 2"><span style="color:red">失效</span><del></if>
+                                                    {$v['gname']}　{$val['color']}　{$val['size']}
+                                            <if condition="$val['status'] eq 2"></del></if>
+                                                    </div>
+                                                    <div><?=$val['price'].'元 × '.$val['num']?></div>
+                                                </div>
+                                            </div>
+                                        </foreach>
+                                    </td>
+                                    <td>
+                                        金额：<span class="text-theme fwb">{$v['total']}元</span>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <a href="{:U('Order/orderDetail', ['oid'=>$v['id']])}"  class="ui-btn-theme uc-btn-md">订单详情</a>　
+                                        <a href="" onclick="alert('已经提醒店家了，麻烦亲您耐心等待一下哟~')" class="ui-btn-theme uc-btn-md">提醒发货</a>
+                                    </td>
+                                </tr>
+                            </foreach>
+                        </table>
+
+                        <div class="ta-c">
+                            <ul class="pagination">
+                                {$show}
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="javas" >
+<script>
+$('.pagination').children().children().unwrap().wrapAll("<li></li>");
+</script>
+</block>

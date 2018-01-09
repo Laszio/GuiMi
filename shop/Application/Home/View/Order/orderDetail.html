@@ -1,0 +1,101 @@
+<extend name="Common/index" />
+<block name="main">
+
+    <div class="wrapper uc-router">
+        <ul>
+            <li><a href="">首页</a></li>
+            <li><span class="divider"></span></li>
+            <li><span>个人中心</span></li>
+        </ul>
+    </div>
+
+    <div class="wrapper">
+        <div class="uc-main clearfix">
+            <div class="uc-aside">
+                <div class="uc-menu">
+                    <div class="tit">订单中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/allOrder')}">我的订单</a></li>
+                        <li><a href="{:U('User/favorite')}">我的收藏</a></li>
+                        <li><a href="{:U('History/index')}">浏览历史</a></li>
+                        <li><a href="{:U('Score/index')}">个人积分</a></li>
+                    </ul>
+                    <div class="tit">客户服务</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/comeBackInfo')}">退货中心</a></li>
+                    </ul>
+                    <div class="tit">账户中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('User/userInfo')}">账户信息</a></li>
+                        <li><a href="{:U('User/safe')}">账户安全</a></li>
+                        <li><a href="{:U('Address/index')}">收货地址</a></li>
+                    </ul>
+                    <div class="tit">消息中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:U('Order/waitEvaluate')}">商品评价</a></li>
+                        <li><a href="{:U('Message/index')}">站内消息</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uc-content">
+                <div class="uc-panel">
+                    <div class="uc-bigtit">订单详情</div>
+                    <div class="uc-panel-bd">
+                        <div class="uc-sort">
+                            <div class="uc-tabs">
+                            </div>
+                            <div class="uc-search">
+                            </div>
+                        </div>
+                        <table class="refund-returns-list">
+                            <tr class="head bd-t">
+                                <td width="370" class="first">商品名称</td>
+                                <td>颜色</td>
+                                <td>尺寸</td>
+                                <td>数量</td>
+                                <td>金额</td>
+                                <td width="140">操作</td>
+                            </tr>
+                            <foreach name="detailInfo" item="v">
+                                <tr class="item-head">
+                                    <td colspan="6">
+                                        <div class="fl">
+                                            订单编号: {$v['oid']} 
+                                        </div>
+                                        <div class="fr">时间：{$orderInfo['addtime']}   </div>
+                                    </td>
+                                </tr>
+                                <tr class="item">
+                                    <td class="first">
+                                        <div class="good-desc">
+                                            <img class="gimg" src="__ROOT__/Uploads{$v['colorpic']}" alt="" />
+                                            <div class="ginfo">
+                                                {$v['gname']}<br />订单编号：16978514363344786
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{$v['color']}</td>
+                                    <td>{$v['size']}</td>
+                                    <td>{$v['num']}件</td>
+                                    <td><span class="text-danger">{$v['total']}元</span></td>
+                                    <if condition="$orderInfo['status'] eq 2 OR $orderInfo['status'] eq 3">
+                                        <if condition="$v['status'] eq 1" >
+                                            <td class="last"><a href="{:U('Order/comeBack',['oid'=>$v['oid'],'id'=>$v['id']])}" class="ui-btn-theme uc-btn-md">申请退货</a></td>
+                                        <else />
+                                            <td class="last">订单失效</td>
+                                        </if>
+                                    <elseif condition="$v['status'] neq 3"   />
+                                        <td class="last"><a href="{:U('Comment/sendComment', ['odetail_id'=>$v['id']])}" class="ui-btn-theme uc-btn-md">立即评论</a></td>
+
+                                    </if>
+                                </tr>
+                                <tr class="blank"></tr>
+                            </foreach>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</block>
